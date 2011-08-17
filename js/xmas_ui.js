@@ -238,7 +238,8 @@ var XMAS_UI = (function() {
   };
   
   var checkYearSetup = function() {
-    if (isNaN(XMAS_IO.getCurrentYear())) {
+    var currentYear = XMAS_IO.getCurrentYear(); 
+    if (currentYear == null || currentYear.length == 0) {
       XMAS_UI.showDialog("years");
       $("#years .close").hide();
     }
@@ -315,6 +316,20 @@ var XMAS_UI = (function() {
   };
   
   var newEntryMode = function() { toggleEntryDialogMode("new", "edit"); enableEntryInput(true); };
+  
+  var otherEvents = function() {
+    var $dialog = $("#otherEvents");
+    $(".close", $dialog).show();
+    var $select = $(".existingEvent .event", $dialog);
+    $select.empty();
+    $select.append(newOption("", "-- Select an event --"));
+    var events = XMAS_IO.getEvents();
+    for (var e in events) {
+      $select.append(newOption(events[e], events[e]));
+    }
+    
+    showDialog("otherEvents");
+  };
   
   var saveRosterEntry = function() {
     var result = (isEditMode() ? XMAS_IO.editRosterEntry($("#existingEntries").val()) : XMAS_IO.newRosterEntry());
@@ -396,6 +411,7 @@ var XMAS_UI = (function() {
    ,hideGroupDropDowns: hideGroupDropDowns
    ,loadEntryToEdit: loadEntryToEdit
    ,newEntryMode: newEntryMode
+   ,otherEvents: otherEvents
    ,saveRosterEntry: saveRosterEntry
    ,setupYears: setupYears
    ,showDialog: showDialog

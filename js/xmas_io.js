@@ -5,6 +5,8 @@ var XMAS_IO = (function() {
   var GROUP_DELIM = "|"; 
   var CURRENT_YEAR_ID = "_CURRENT_YEAR_";
   var PREV_YEARS_ID = "_PREV_YEARS_";
+  var OTHER_EVENTS_ID = "_OTHER_EVENTS_";
+  var OTHER_EVENTS_DELIM = "|";
   
   var init = function(opt) { $roster = $("#roster"); };
   
@@ -85,7 +87,14 @@ var XMAS_IO = (function() {
     localStorage[entry.name] = entryAsText;
   };
   
-  var getCurrentYear = function() { return parseInt(localStorage[CURRENT_YEAR_ID]); };
+  var getCurrentYear = function() { return localStorage[CURRENT_YEAR_ID]; };
+  var getEvents = function() { 
+    var events = localStorage[OTHER_EVENTS_ID];
+    if (events == null || events.length == 0) {
+      return events;
+    }
+    return events.split(OTHER_EVENTS_DELIM);
+  };
   var getNumPrevYears = function() { return getPrevYears().length; };
   
   var getPrevYears = function() {
@@ -121,6 +130,17 @@ var XMAS_IO = (function() {
       }
     } 
     return values;
+  };
+  
+  var newEvent = function() {
+    var $dialog = $("#otherEvents");
+    var event = $("input.event", $dialog).val();
+    
+    if (localStorage[OTHER_EVENTS_ID] == null) {
+      localStorage[OTHER_EVENTS_ID] = "";
+    }
+    localStorage[OTHER_EVENTS_ID] += (localStorage[OTHER_EVENTS_ID].length > 0 ? OTHER_EVENTS_DELIM : "") + event;
+    return event;
   };
   
   /**
@@ -196,6 +216,14 @@ var XMAS_IO = (function() {
     return true;
   };
   
+  var selectEvent = function(event) {
+    localStorage[CURRENT_YEAR_ID] = event;
+    localStorage[PREV_YEARS_ID] = "";
+    $("#dialogs").hide();
+    XMAS_UI.show();    
+    return true;
+  };
+  
   var supportsLocalStorage = function() {
     try { 
       return 'localStorage' in window && window['localStorage'] !== null; 
@@ -209,13 +237,16 @@ var XMAS_IO = (function() {
    ,deleteRosterEntry: deleteRosterEntry
    ,editRosterEntry: editRosterEntry
    ,getCurrentYear: getCurrentYear
+   ,getEvents: getEvents
    ,getNumPrevYears: getNumPrevYears
    ,getPrevYears: getPrevYears
    ,loadRoster: loadRoster
    ,loadGroups: loadGroups
+   ,newEvent: newEvent
    ,newRosterEntry: newRosterEntry
    ,save: save
    ,saveYearSetup: saveYearSetup
+   ,selectEvent: selectEvent
    ,supportsLocalStorage: supportsLocalStorage
   };
 })();

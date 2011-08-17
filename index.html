@@ -6,8 +6,7 @@
   <link type="text/css" rel="stylesheet" href="xmas_cards.css"/>
   <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
   <script type="text/javascript" src="js/json.js"></script>
-  <script type="text/javascript" src="js/xmas_roster.js"></script>
-  <script type="text/javascript" src="js/xmas_groups.js"></script>
+  <script type="text/javascript" src="js/xmas_test_data.js"></script>
   <script type="text/javascript" src="js/xmas_io.js"></script>
   <script type="text/javascript" src="js/xmas_options.js"></script>
   <script type="text/javascript" src="js/xmas_sorting.js"></script>
@@ -17,17 +16,17 @@
 <body>
 
 <div id="header">
-  <div id="version">v2.1</div>
+  <div id="version">v2.2</div>
   <div id="numTotal" class="total">
     <label># of people:</label>
     <span id="totalValue"></span>
   </div>
   <div id="numSent" class="total">
-    <label># of Christmas cards sent in <span class="currentYear"></span>:</label>
+    <label># sent for <span class="currentYear"></span>:</label>
     <span id="sentValue"></span>
   </div>
   <div id="numReceived" class="total">
-    <label># of Christmas cards received in <span class="currentYear"></span>:</label>
+    <label># received for <span class="currentYear"></span>:</label>
     <span id="receivedValue"></span>
   </div>
 </div>
@@ -53,6 +52,7 @@
       <p id="editEntry" class="action"><a href="javascript:;">Modify recipient</a></p>
       <p id="deleteEntry" class="action"><a href="javascript:;">Delete recipient</a></p>
       <p id="yearSetup" class="action"><a href="javascript:;">Year setup</a></p>
+      <p id="otherEventSetup" class="action"><a href="javascript:;">Other events</a></p>
       <p id="groupsOn" class="action"><a class="group toggle" href="javascript:;">Turn on groups</a></p>
       <p id="groupsOff" class="action"><a class="group toggle" href="javascript:;">Turn off groups</a></p>
       <p class="success entry">Recipient saved</p>
@@ -78,6 +78,7 @@
     <div class="content">
       <p id="rosterToLocalStorage"><a href="javascript:;">Convert old roster to local storage</a></p>
       <p id="groupsToLocalStorage"><a href="javascript:;">Convert old groups to local storage</a></p>
+      <p id="eventsToLocalStorage"><a href="javascript:;">Convert other events to local storage</a></p>
     </div>
   </div>
 </div>
@@ -98,6 +99,27 @@
       </div>
       <div class="actions">
         <button class="save">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Other events setup dialog -->
+  <div id="otherEvents" class="dialog">
+    <h3>Other Events <a class="close" href="javascript:;">Close</a></h3>
+    <div class="content">
+      <div class="field">
+        <label>Create a new event:</label>
+        <p class="value"><input type="text" class="event" /></p>
+      </div>
+      <div class="field">
+        <label>-- OR --</label>
+      </div>
+      <div class="field">
+        <label>Select an existing event:</label>
+        <p class="existingEvent value"><select class="event"></select></p>
+      </div>
+      <div class="actions">
+        <button class="save">Create new event</button>
       </div>
     </div>
   </div>

@@ -54,61 +54,18 @@ var XMAS_ROSTER = {
 ,"Maddy Aide":{group:"Other Friends",years:{2008:{sent:false,recv:false},2009:{sent:false,recv:false}}}
 ,"Kamph Family":{group:"DASD Friends",years:{2008:{sent:false,recv:false},2009:{sent:false,recv:false},2010:{sent:true,recv:true}}}
 };
-/*
-var XMAS_ROSTER = {
-    "Mom and Dad":{group:"Family",years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Debbie and Jerry":{group:"Family",years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Lisa Hansberger":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Grandma Ruthie":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Mom-Mom":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Jed Brody":{years:{2008:{sent:true},2009:{sent:true},2010:{sent:true}}}
-   ,"Rivera Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Julie Valenti":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Dana Kolesar":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Melissa and Todd Schorle":{years:{2008:{sent:true},2009:{sent:true},2010:{sent:true}}}
-   ,"Erin and Pat Doran":{years:{2008:{sent:true},2009:{sent:true},2010:{sent:true}}}
-   ,"Cole Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Ellis Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Julia and Juan Rosa":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Barbara and Frank Weber":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Howard Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Cauffman Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Tara and Dave Kurten":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Laura and Scott Grodewald":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Uncle Bob and fam":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Wagner Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Jenny and Eric":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Trisha and Justin Brubaker":{years:{2008:{sent:true},2009:{sent:true},2010:{sent:true}}}
-   ,"Megan Rancier":{years:{2008:{sent:true},2009:{sent:true},2010:{sent:true}}}
-   ,"Grandma Connie":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Grygielko Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Jared and Jessica Pray":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Smitty Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Grandma Tee":{years:{2008:{sent:true},2009:{sent:true},2010:{sent:true}}}
-   ,"Crisi Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Nancy Legath":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Gotro Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Danielle and Scott Cullen":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Showers Family":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Dunbar Family":{years:{2008:{sent:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"extra for us":{years:{2008:{},2009:{sent:true},2010:{sent:true}}}
-   ,"Tex and Jenny Darlington":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Jamie and Kelly Graham":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Jeremy and Christina Eckenroth":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Susie and Sander":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Val and Jay":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Wil and Liz Briones":{years:{2008:{sent:true,recv:true},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Brogan Family":{years:{2008:{sent:true},2009:{recv:true},2010:{sent:true}}}
-   ,"Allyson and Mark Patterson":{years:{2008:{},2009:{recv:true},2010:{sent:true}}}
-   ,"Kirk Family":{years:{2008:{},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Cari neighbor":{years:{2008:{},2009:{recv:true}}}
-   ,"Baer Family":{years:{2008:{},2009:{recv:true},2010:{sent:true}}}
-   ,"Lauren Richmond":{years:{2008:{},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"LE":{years:{2008:{},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"PV":{years:{2008:{},2009:{sent:true,recv:true},2010:{sent:true}}}
-   ,"Maddy Teacher":{years:{2008:{},2009:{}}}
-   ,"Ms. Elena":{years:{2008:{},2009:{},2010:{sent:true}}}
-   ,"Maddy Aide":{years:{2008:{},2009:{}}}
-   ,"Kamph Family":{group:"DASD Friends",years:{2008:{},2009:{},2010:{sent:true}}}
-};
-*/
+
+var XMAS_SAVED_GROUPS = [
+ "Family"
+,"Bucknell"
+,"DASD Friends"
+,"Neighbors"
+,"High School Friends"
+,"Other Friends"
+];
+
+var OTHER_EVENTS = [
+ "Will's Blessing"                    
+,"Maddy's 4th bday"
+,"Todd's 33rd bday"
+];

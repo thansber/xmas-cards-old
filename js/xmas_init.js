@@ -72,11 +72,14 @@ $(document).ready(function() {
   $("#footer .options #editEntry").click(function() { XMAS_UI.editEntryMode(); XMAS_UI.showDialog("entry"); });
   $("#footer .options #deleteEntry").click(function() { XMAS_UI.showDialog("entryDelete"); });
   $("#footer .options #yearSetup").click(function() { XMAS_UI.setupYears(); });
+  $("#footer .options #otherEventSetup").click(function() { XMAS_UI.otherEvents(); });
   
   $("#entry #existingEntries").change(function() { XMAS_UI.loadEntryToEdit($(this).val()); });
   $("#entry button.save").click(function() { XMAS_UI.saveRosterEntry(); });
   $("#entryDelete button.delete").click(function() { XMAS_UI.deleteRosterEntry(); });
   $("#years button.save").click(function() { XMAS_IO.saveYearSetup(); });
+  $("#otherEvents button.save").click(function() { XMAS_IO.selectEvent(XMAS_IO.newEvent()); });
+  $("#otherEvents .existingEvent .event").change(function() { XMAS_IO.selectEvent($(this).val()); });
   
   $("#dialogs .dialog .close").click(function() { $("#dialogs").hide(); return false; });
     
@@ -98,5 +101,12 @@ $(document).ready(function() {
       groups += (groups.length > 0 ? "|" : "") + XMAS_SAVED_GROUPS[g];
     }
     localStorage["_GROUPS_"] = groups;
+  });
+  $("#eventsToLocalStorage").click(function() {
+    var events = "";
+    for (var e in OTHER_EVENTS) {
+      events += (events.length > 0 ? "|" : "") + OTHER_EVENTS[e];
+    }
+    localStorage["_OTHER_EVENTS_"] = events;
   });
 });
