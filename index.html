@@ -4,7 +4,7 @@
   <title>Christmas Cards</title>
   <meta http-equiv="X-UA-Compatible" content="IE=8" />
   <link type="text/css" rel="stylesheet" href="xmas_cards.css"/>
-  <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
   <script type="text/javascript" src="js/json.js"></script>
   <script type="text/javascript" src="js/xmas_test_data.js"></script>
   <script type="text/javascript" src="js/xmas_io.js"></script>
@@ -16,18 +16,15 @@
 <body>
 
 <div id="header">
-  <div id="version">v2.2</div>
+  <div id="version">v2.3</div>
   <div id="numTotal" class="total">
-    <label># of people:</label>
-    <span id="totalValue"></span>
+    You have <span id="totalValue" class="value"></span> total recipient(s).
   </div>
   <div id="numSent" class="total">
-    <label># sent for <span class="currentYear"></span>:</label>
-    <span id="sentValue"></span>
+    You have sent something to <span id="sentValue" class="value"></span> recipient(s) for <span class="currentYear"></span>.
   </div>
   <div id="numReceived" class="total">
-    <label># received for <span class="currentYear"></span>:</label>
-    <span id="receivedValue"></span>
+    You have recieved something from <span id="receivedValue" class="value"></span> recipient(s) for <span class="currentYear"></span>.
   </div>
 </div>
 <table id="roster">
@@ -76,9 +73,9 @@
     <h2 class="curve tl bl">Admin</h2>
     <p class="arrow down" />
     <div class="content">
-      <p id="rosterToLocalStorage"><a href="javascript:;">Convert old roster to local storage</a></p>
-      <p id="groupsToLocalStorage"><a href="javascript:;">Convert old groups to local storage</a></p>
-      <p id="eventsToLocalStorage"><a href="javascript:;">Convert other events to local storage</a></p>
+      <p id="backupData"><a href="javascript:;">Backup data</a></p>
+      <p id="importData"><a href="javascript:;">Import data</a></p>
+      <p id="importTestData"><a href="javascript:;">Import test data</a></p>
     </div>
   </div>
 </div>
@@ -173,6 +170,23 @@
       </div>
       <div class="actions">
         <button class="delete">Delete Recipient</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="dataTransfer" class="dialog">
+  	<h3><span class="import">Import</span><span class="export">Backup</span> Data <a class="close" href="javascript:;">Close</a></h3>
+  	<div class="content">
+      <div class="field import">
+        <label>Enter the data you wish to import:</label>
+        <p class="value"><textarea rows="10" cols="80"></textarea></p>
+      </div>
+      <div class="field export">
+        <label>Copy the contents and save it to a file in case you wish to import it later:</label>
+        <p class="value"><textarea rows="10" cols="80"></textarea></p>
+      </div>
+      <div class="actions">
+        <button class="import">Import Data</button>
       </div>
     </div>
   </div>

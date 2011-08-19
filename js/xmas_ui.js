@@ -272,6 +272,15 @@ var XMAS_UI = (function() {
       .find("input").attr("disabled", !inputEnabled).end()
       .find("select:not(#existingEntries)").attr("disabled", !inputEnabled);
   };
+  
+  var exportData = function(data) {
+    showDialog("dataTransfer");
+    var $dialog = $("#dataTransfer");
+    $dialog
+      .find(".import").hide().end()
+      .find(".export").show();
+    $(".field.export textarea", $dialog).val(JSON.stringify(data));
+  };
 
   /**
    * Disables group drop-downs in the roster table, 
@@ -389,6 +398,14 @@ var XMAS_UI = (function() {
     });
   }; 
   
+  var showImportData = function() {
+    showDialog("dataTransfer");
+    var $dialog = $("#dataTransfer");
+    $dialog
+      .find(".export").hide().end()
+      .find(".import").show();
+  };
+  
   /**
    * Updates the total values at the top of the page.
    */
@@ -408,6 +425,7 @@ var XMAS_UI = (function() {
    ,deleteRosterEntry: deleteRosterEntry
    ,editEntryMode: editEntryMode
    ,enableEntryInput: enableEntryInput
+   ,exportData: exportData
    ,hideGroupDropDowns: hideGroupDropDowns
    ,loadEntryToEdit: loadEntryToEdit
    ,newEntryMode: newEntryMode
@@ -416,6 +434,7 @@ var XMAS_UI = (function() {
    ,setupYears: setupYears
    ,showDialog: showDialog
    ,showGroupDropDowns: showGroupDropDowns
+   ,showImportData: showImportData
    ,updateTotals: updateTotals
   };
   

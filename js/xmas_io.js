@@ -8,6 +8,8 @@ var XMAS_IO = (function() {
   var OTHER_EVENTS_ID = "_OTHER_EVENTS_";
   var OTHER_EVENTS_DELIM = "|";
   
+  var STORED_DATA = [GROUPS_ID, CURRENT_YEAR_ID, PREV_YEARS_ID, OTHER_EVENTS_ID];
+  
   var init = function(opt) { $roster = $("#roster"); };
   
   /* --------------------------- */
@@ -65,6 +67,20 @@ var XMAS_IO = (function() {
   /* -------------------------- */
   /* ----- PUBLIC METHODS ----- */
   /* -------------------------- */
+  
+  /**
+   * Reads all data stored for this domain and creates an object containing the stored data. 
+   */
+  var backupStoredData = function() {
+    var data = {};
+    for (var key in STORED_DATA) {
+      data[STORED_DATA[key]] = localStorage[STORED_DATA[key]];
+    }
+    
+    $.extend(true, data, loadRoster());
+    return data;
+  };
+  
   var deleteRosterEntry = function(name) { localStorage.removeItem(name); };
   
   var editRosterEntry = function(oldName) {
@@ -74,6 +90,9 @@ var XMAS_IO = (function() {
 
     // Need to retain the current year sent/received since it does not appear in the dialog
     var oldEntry = JSON.parse(localStorage[oldName]);
+    if (!oldEntry.years[currentYear]) {
+      oldEntry.years[currentYear] = {};
+    }
     entry.years[currentYear] = {};
     entry.years[currentYear].sent = oldEntry.years[currentYear].sent;
     entry.years[currentYear].recv = oldEntry.years[currentYear].recv;
@@ -105,6 +124,15 @@ var XMAS_IO = (function() {
     return prevYears.split(",");
   };
   
+  var importData = function() {
+    var data = JSON.parse($("#dataTransfer .field.import textarea").val());
+    for (var d in data) {
+      localStorage[d] = (typeof data[d] == "object" ? JSON.stringify(data[d]) : data[d]);
+    }
+    XMAS_UI.init();
+    XMAS_UI.show();
+  };
+  
   /**
    * Reads all group entries from storage and returns them as an array.
    */
@@ -132,6 +160,9 @@ var XMAS_IO = (function() {
     return values;
   };
   
+  /**
+   * Creates a new event based on the user's input and stored it to the list of events.
+   */
   var newEvent = function() {
     var $dialog = $("#otherEvents");
     var event = $("input.event", $dialog).val();
@@ -234,12 +265,14 @@ var XMAS_IO = (function() {
   
   return {
     init: init
+   ,backupStoredData: backupStoredData
    ,deleteRosterEntry: deleteRosterEntry
    ,editRosterEntry: editRosterEntry
    ,getCurrentYear: getCurrentYear
    ,getEvents: getEvents
    ,getNumPrevYears: getNumPrevYears
    ,getPrevYears: getPrevYears
+   ,importData: importData
    ,loadRoster: loadRoster
    ,loadGroups: loadGroups
    ,newEvent: newEvent

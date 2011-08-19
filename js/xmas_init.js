@@ -1,12 +1,5 @@
 $(document).ready(function() {
-  
-  /*
-  if (!$.browser.webkit) {
-    alert("Currently this application uses features that only Chrome is compatible with, please switch to the Google Chrome browser");
-    return false;
-  }
-  */
-  
+    
   if (!XMAS_IO.supportsLocalStorage()) {
     alert("Please upgrade to the most recent version of your browser if you want to use this application");
     return false;
@@ -80,33 +73,42 @@ $(document).ready(function() {
   $("#years button.save").click(function() { XMAS_IO.saveYearSetup(); });
   $("#otherEvents button.save").click(function() { XMAS_IO.selectEvent(XMAS_IO.newEvent()); });
   $("#otherEvents .existingEvent .event").change(function() { XMAS_IO.selectEvent($(this).val()); });
+  $("#dataTransfer button.import").click(function() { XMAS_IO.importData(); });
   
   $("#dialogs .dialog .close").click(function() { $("#dialogs").hide(); return false; });
     
   /* ===== */
   /* Admin */
   /* ===== */
-  $("#rosterToLocalStorage").click(function() {
+  $("#backupData").click(function() {
+    XMAS_UI.exportData(XMAS_IO.backupStoredData());
+  });
+  
+  $("#importData").click(function() {
+    XMAS_UI.showImportData();
+  });
+  
+  $("#importTestData").click(function() {
     for (var r in XMAS_ROSTER) {
       var entry = jQuery.extend(true, {}, XMAS_ROSTER[r]);
       entry.entry = true;
       entry.name = r;
       localStorage[r] = JSON.stringify(entry);
     }
-    XMAS_UI.show();
-  });
-  $("#groupsToLocalStorage").click(function() {
+
     var groups = "";
     for (var g in XMAS_SAVED_GROUPS) {
       groups += (groups.length > 0 ? "|" : "") + XMAS_SAVED_GROUPS[g];
     }
     localStorage["_GROUPS_"] = groups;
-  });
-  $("#eventsToLocalStorage").click(function() {
+
     var events = "";
     for (var e in OTHER_EVENTS) {
       events += (events.length > 0 ? "|" : "") + OTHER_EVENTS[e];
     }
     localStorage["_OTHER_EVENTS_"] = events;
+    
+    XMAS_UI.init();
+    XMAS_UI.show();
   });
 });
