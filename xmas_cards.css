@@ -19,14 +19,14 @@ body { font-family: Verdana; padding:1em; color:green; }
 #header .total .value { font-weight:bold; }
 #header #version { float:right; font-size:0.6em; }
 
-table#roster { border-left:1px solid black; border-top:1px solid black; border-collapse:collapse; width:80%; clear:both; }
-table#roster th, table#roster td { border-right:1px solid black; border-bottom:1px solid black; padding:0.3em 0.6em; }
-table#roster .name { width:20em; }
-table#roster .year { width:10em; }
-table#roster tr:hover { background-color:black; color:white; }
-table#roster th { font-weight:bold; font-size:0.8em; text-align:left; background-color:green; color:white; }
-table#roster th.current { color:#FF3D3D; }
-table#roster td { font-size:0.7em; }
+#roster { border-left:1px solid black; border-top:1px solid black; border-collapse:collapse; width:80%; clear:both; }
+#roster th, #roster td { border-right:1px solid black; border-bottom:1px solid black; padding:0.3em 0.6em; }
+#roster .name { width:20em; }
+#roster .year { width:10em; }
+#roster tr:hover { background-color:black; color:white; }
+#roster th { font-weight:bold; font-size:0.8em; text-align:left; background-color:green; color:white; }
+#roster th.current { color:#FF3D3D; }
+#roster td { font-size:0.7em; }
 
 #footer { position:fixed; top:5%; right:0; }
 #footer .options { width:12em; margin-bottom:1em; position:relative; background-color:white; }
