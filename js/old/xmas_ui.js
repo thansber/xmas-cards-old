@@ -58,7 +58,7 @@ var XMAS_UI = (function() {
    * "Sent & Received".  If only one flag is set, the corresponding text is displayed.
    */
   var buildYearResult = function(entry, year) {
-    if (entry.years[year] == null) {
+    if (!entry.years || entry.years[year] == null) {
       return "";
     }
 
@@ -196,7 +196,7 @@ var XMAS_UI = (function() {
       var currentYearSent = false;
       var currentYearReceived = false;
       
-      var entryCurrentYear = rosterEntry.years[currentYear]; 
+      var entryCurrentYear = rosterEntry.years ? rosterEntry.years[currentYear] : null; 
       if (entryCurrentYear != null) {
         if (entryCurrentYear.sent != null) {
           currentYearSent = entryCurrentYear.sent;

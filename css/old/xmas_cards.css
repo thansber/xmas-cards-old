@@ -8,7 +8,7 @@ body { font-family: Verdana; padding:1em; color:green; }
 .curve.br { border-bottom-right-radius:4px; -moz-border-radius-bottomright:4px; }
 .curve.all,.dialog { border-radius:4px; -moz-border-radius:4px; }
 
-.arrow { width:15px; background-image:url(images/arrows.png); background-repeat:no-repeat; }
+.arrow { width:15px; background-image:url(../../images/arrows.png); background-repeat:no-repeat; }
 .arrow.left { background-position:0 0; }
 .arrow.right { background-position:-15px 0; }
 .arrow.up { background-position:-30px 0; }
@@ -41,7 +41,7 @@ body { font-family: Verdana; padding:1em; color:green; }
 #footer .options.maintenance #groupOnMessage { display:none; font-size:0.8em; margin:0 0 0.4em 0em; font-weight:bold; }
 #footer .options.admin #importTestData a { color:white; }
 
-#dialogs { display:none; width:100%; height:100%; top:0; left:0; position:fixed; background-image:url(images/semitransparent.png); z-index:10; }
+#dialogs { display:none; width:100%; height:100%; top:0; left:0; position:fixed; background-image:url(../../images/semitransparent.png); z-index:10; }
 #dialogs .dialog { margin:4em auto; z-index:11; background-color:white; width:500px; border:3px solid green; }
 #dialogs .dialog h3 { width:99.4%; background-color:green; color:white; padding:0.2em; font-size:1em; font-weight:bold; }
 #dialogs .dialog h3 .close { display:block; float:right; color:red; text-decoration:none; font-size:0.6em; font-weight:bold; padding-top:0.2em; }
