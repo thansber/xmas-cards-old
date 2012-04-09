@@ -1,0 +1,94 @@
+body,h1,h2,h3,h4,h5,h6,p {
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: #189730;
+    font-family: Verdana;
+    overflow-x: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    border-radius: 12px;
+    box-shadow: 2px 2px 1px #666666;
+    color: #F0F0F0;
+    cursor: pointer;
+    padding: 2px 8px 3px;
+    position: relative;
+    text-shadow: 2px 2px 3px #111111;
+}
+
+button:active {
+    box-shadow: 1px 1px 1px #666666;
+    top: 1px;
+}
+
+button.red {
+    background: linear-gradient(#DF3336, #BF3235);
+    border: 2px solid #952B2C;
+}
+
+button.red:hover {
+    background: linear-gradient(#BF3235, #DF3336);
+}
+
+button.green {
+    background: linear-gradient(#5D9C46, #3D6832);
+    border: 2px solid #225726;
+}
+
+button.green:hover {
+    background: linear-gradient(#3D6832, #5D9C46);
+}
+
+#messages {
+    background-color: rgba(68, 68, 68, 1);
+    border-radius: 0 0 10px 10px;
+    color: rgb(255, 255, 180);
+    height: 0;
+    position: relative;
+    text-align: center;
+    transition: height 0.6s;
+}
+
+#messages .close {
+    background: linear-gradient(rgba(51, 51, 51, 1), rgba(102, 102, 102, 1) );
+    border: 2px solid rgba(51, 51, 51, 1);
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px rgba(34, 34, 34, 1);
+    color: rgba(221, 221, 221, 1);
+    cursor: pointer;
+    display: none;
+    font-size: 1em;
+    padding: 4px 7px 3px;
+    position: absolute;
+    right: 2.4em;
+    text-shadow: 2px 2px 2px rgba(17, 17, 17, 1);
+    top: 0.6em;
+    user-select: none;
+}
+
+#messages .close:hover {
+    background: linear-gradient(#666, #333);
+}
+
+#messages .close:active {
+    top: 1px;
+}
+
+#messages.displayed {
+    border-top: 1px solid rgba(136, 136, 136, 1);
+    height: 2.8em;
+    padding: 0.4em 6em;
+}
+
+#messages.displayed .close {
+    display: inline-block;
+}

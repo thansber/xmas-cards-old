@@ -1,0 +1,182 @@
+#main {
+    margin: 2em 1.5em;
+    width: 100%;
+}
+
+#main .group.container {
+    border: 2px solid rgba(34, 87, 38, 1);
+    border-radius: 10px;
+    float: left;
+    margin: 0 1.6em 2em 0;
+    padding-bottom: 1em;
+    width: 470px;
+}
+
+#main .default.group.container {
+    border-color: rgba(153, 153, 153, 1);
+}
+
+#main .group.container .name {
+    background: linear-gradient(rgba(93, 156, 70, 1), rgba(61, 104, 50, 1) );
+    border-radius: 8px 8px 0 0;
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.3em;
+    padding: 0.2em 0 0.2em 0.8em;
+}
+
+#main .group.container .name .count {
+    font-size: 0.8em;
+    position: relative;
+    top: -2px;
+}
+
+#main .group.container .name .view {
+    cursor: pointer;
+}
+
+#main .group.container .name .edit {
+    display: none;
+}
+
+#main .group.container .name .edit.group.text {
+    font-size: 0.8em;
+    margin: 0;
+    position: relative;
+    top: -1px;
+    width: 14em;
+}
+
+#main .default.group.container .name {
+    background: linear-gradient(rgba(204, 204, 204, 1), rgba(153, 153, 153, 1) );
+}
+
+#main .group.container .name .delete.group {
+    color: rgba(221, 221, 221, 1);
+    cursor: pointer;
+    float: right;
+    font-size: 0.7em;
+    height: 1.8em;
+    margin-top: -3px;
+    padding: 0.3em 0 0;
+    position: relative;
+    text-align: center;
+    text-shadow: 2px 2px 2px rgba(17, 17, 17, 1);
+    width: 2em;
+}
+
+#main .group.container .roster {
+    background-color: rgba(255, 255, 255, 1);
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#main .group.container .roster .entry {
+    overflow: auto;
+    padding: 1em 1em 0;
+}
+
+#main .group.container .roster .entry .name {
+    background: none;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    font-size: 1.1em;
+    padding: 0;
+}
+
+#main .group.container .roster .entry .name .delete.recipient {
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+    float: right;
+    font-size: 0.7em;
+    height: 1.8em;
+    margin-right: -13px;
+    margin-top: -3px;
+    opacity: 0;
+    padding: 0.3em 0 0;
+    position: relative;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(17, 17, 17, 1);
+    width: 2em;
+}
+
+#main .group.container .roster .entry:hover .name .delete.recipient {
+    opacity: 1;
+}
+
+#main .group.container .roster .entry .year-wrapper {
+    float: left;
+    font-size: 0.8em;
+    margin-right: 1em;
+    margin-top: 0.4em;
+    padding: 0;
+}
+
+#main .group.container .roster .entry .year-wrapper:last-child {
+    margin-right: 0;
+}
+
+#main .group.container .roster .entry .year-wrapper span {
+    background: linear-gradient(rgba(230, 230, 230, 1), rgba(174, 174, 174, 1) );
+    color: rgba(0, 0, 0, 1);
+    float: left;
+    padding: 0.2em 0.4em;
+}
+
+#main .group.container .roster .entry .year-wrapper.current span {
+    background: linear-gradient(rgba(255, 84, 84, 1), rgba(168, 0, 0, 1) );
+    color: rgba(255, 255, 255, 1);
+}
+
+#main .group.container .roster .entry .year-wrapper span.year {
+    border-bottom-left-radius: 0.8em;
+    border-right: 1px solid #bbb;
+    border-top-left-radius: 0.8em;
+}
+
+#main .group.container .roster .entry .year-wrapper.empty span.year {
+    opacity: 0.3;
+}
+
+#main .group.container .roster .entry .year-wrapper.empty.current span.year {
+    opacity: 0.2;
+}
+
+#main .group.container .roster .entry .year-wrapper span.sent {
+    border-right: 1px solid #bbb;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+}
+
+#main .group.container .roster .entry .year-wrapper.current span.sent {
+    opacity: 0.2;
+}
+
+#main .group.container .roster .entry .year-wrapper span.sent.done {
+    opacity: 1;
+}
+
+#main .group.container .roster .entry .year-wrapper span.received {
+    border-bottom-right-radius: 0.8em;
+    border-top-right-radius: 0.8em;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+}
+
+#main .group.container .roster .entry .year-wrapper.current span.received {
+    opacity: 0.2;
+}
+
+#main .group.container .roster .entry .year-wrapper span.received.done {
+    opacity: 1;
+}
+
+#main .group.container .empty.message {
+    color: rgba(0, 0, 0, 1);
+    display: inline-block;
+    padding-top: 1em;
+    text-align: center;
+    width: 100%;
+}

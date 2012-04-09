@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Christmas Cards</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/quickbar.css"/>
+  <link rel="stylesheet" href="css/roster.css"/>
+  <link rel="stylesheet" href="css/dialogs.css"/>
+  <link rel="stylesheet" href="css/print.css" media="print"/>
+</head>
+
+<body>
+
+<div id="quickbar">
+  <section class="recipient">
+    <input type="text" id="newRecipient" class="new recipient helpful" title="Add a new recipient" value="" /> to
+    <select id="recipientGroup" class="new recipient group">
+      <option value="-1">-- Select a Group --</option>
+    </select>
+    <button class="add recipient green">Save</button>
+    <span class="success message"></span>
+  </section>
+  <section class="group">
+    <input type="text" id="newGroup" class="new group helpful" title="Add a new group" value="" />
+    <button class="add group green">Save</button>
+    <span class="success message"></span>
+  </section>
+  <div class="arrow"></div>
+</div>
+
+<div id="messages"><span class="text"></span><a class="close" title="Hide this message">X</a></div>
+
+<section id="main">
+  <div class="default group container">
+    <h3 class="name"><span class="text">Unassigned</span> <span class="count"></span></h3>
+    <ul class="roster"></ul>
+    <span class="empty message">Nobody has been added yet</span>
+  </div>
+</section>
+
+<section id="dialogs" class="hidden">
+  <section class="migrate dialog">
+    <h1>Data Migration<a class="close">X</a></h1>
+    <div class="content">
+      We are currently migrating your data to our new format in preparation for the new layout...
+      <img src="images/ajax-loader.gif" class="loader" /><span class="complete hidden">migration complete.</span>
+    </div>
+  </section>
+  
+  <section class="delete recipient dialog">
+    <h1>Delete Recipient<a class="close">X</a></h1>
+    <div class="content">
+      Are you sure you want to delete <span class="recipient name"></span>?
+      <div class="actions">
+        <button class="cancel red">No, leave <span class="recipient name"></span> alone</button>
+        <button class="confirm green">Yes, remove <span class="recipient name"></span></button>
+      </div>
+    </div>
+  </section>
+  
+  <section class="delete group dialog">
+    <h1>Delete Group<a class="close">X</a></h1>
+    <div class="content">
+      <div class="confirmation message">Are you sure you want to delete <span class="group name"></span>?</div>
+      <div class="recipient decision message">What do you want to do with the <span class="member count"></span> member(s) that are in <span class="group name"></span>?
+        <div class="choice first">
+          <input type="radio" name="recipient-choice" id="recipient-choice-move" value="move" checked />
+          <label for="recipient-choice-move">Move them to the Unassigned group</label>
+        </div>
+        <div class="choice last">
+          <input type="radio" name="recipient-choice" id="recipient-choice-delete" value="delete" />
+          <label for="recipient-choice-delete">Delete them along with the <span class="group name"></span> group</label>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="cancel red confirmation">No, leave <span class="group name"></span> alone</button>
+        <button class="confirm green confirmation">Yes, delete <span class="group name"></span></button>
+        
+        <button class="cancel red recipient decision">I changed my mind, leave <span class="group name"></span> alone</button>
+        <button class="confirm green recipient decision">Continue with deleting <span class="group name"></span></button>
+      </div>
+    </div>
+  </section>
+  
+  <div class="background"></div>
+</section>
+
+<script src="js/lib/prefixfree.min.js"></script>
+<script>var require = { baseUrl : "js" };</script>
+<script data-main="main" src="js/lib/require-jquery-min.js"></script>
+</body>
+
+</html>

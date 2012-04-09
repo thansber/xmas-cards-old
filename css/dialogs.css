@@ -1,0 +1,122 @@
+#dialogs {
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#dialogs .background {
+    background-color: black;
+    height: 100%;
+    left: 0;
+    opacity: 0.85;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+#dialogs h1 {
+    background: linear-gradient(#037710, #2DB750);
+    border: 2px solid #333333;
+    border-bottom: 0;
+    border-top: 0;
+    color: #FFF;
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.8em 0.8em 0.8em 2%;
+}
+
+#dialogs .close {
+    background: linear-gradient(#333, #666);
+    border: 2px solid #333;
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px #222;
+    color: #ddd;
+    cursor: pointer;
+    float: right;
+    font-size: 0.8em;
+    margin-top: -4px;
+    padding: 4px 7px 3px;
+    position: relative;
+    text-shadow: 2px 2px 2px #111;
+    user-select: none;
+}
+
+#dialogs .close:hover {
+    background: linear-gradient(#666, #333);
+}
+
+#dialogs .close:active {
+    top: 1px;
+}
+
+#dialogs .dialog {
+    height: auto;
+    margin: 0 5%;
+    position: absolute;
+    top: -100%;
+    transition-property: top;
+    transition-duration: 0.4s;
+    transition-timing-function: ease;
+    width: 90%;
+    z-index: 3;
+}
+
+#dialogs .dialog.displayed {
+    top: 0;
+}
+
+#dialogs .content {
+    background-color: white;
+    border: 2px solid #333333;
+    border-top: 0;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 1em 0 1.5em 2%;
+}
+
+#dialogs .content .loader {
+    margin-left: 1em;
+    position: absolute;
+    width: 1.4em;
+}
+
+#dialogs .content .actions {
+    margin-right: 1%;
+    text-align: right;
+}
+
+#dialogs .content .actions button {
+    margin-right: 1em;
+}
+
+/* ========================================== */
+/* ---------- DELETE GROUP DIALOG  ---------- */
+/* ========================================== */
+#dialogs .delete.group .recipient.decision {
+    display: inline-block;
+}
+
+#dialogs .delete.group .recipient.decision .first.choice {
+    margin-top: 1em;
+    margin-bottom: 0.4em;
+}
+
+#dialogs .delete.group .recipient.decision .last.choice {
+    margin-bottom: 1em;
+}
+
+#dialogs .delete.group .confirmation {
+    display: none;
+}
+
+#dialogs .delete.group.empty .recipient.decision {
+    display: none;
+}
+
+#dialogs .delete.group.empty .confirmation {
+    display: inline-block;
+}
