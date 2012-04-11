@@ -33,7 +33,9 @@ function($, Dialog, Group, Message, Recipient, Settings) {
             $this.removeClass("helpful");
           }
       }).on("focus", function() {
-          $(this).removeClass("helpful").select();
+        var $this = $(this);
+        $this.removeClass("helpful");
+        setTimeout(function() { $this.select() }, 10);
       });
       
       $quickbar.find("button.add").click(function(event) {
@@ -47,7 +49,8 @@ function($, Dialog, Group, Message, Recipient, Settings) {
             Message.show(result.error, {type:Message.Types.Error});
           } else {
             Message.success($target, "Recipient added");
-            $newRecipient.select().focus();
+            $newRecipient.focus();
+            setTimeout(function() { $newRecipient.select() }, 10);
           }
         } else if ($target.hasClass("group")) {
           var result = Group.add($newGroup.val());
@@ -55,7 +58,8 @@ function($, Dialog, Group, Message, Recipient, Settings) {
             Message.show(result.error, {type:Message.Types.Error});
           } else {
             Message.success($target, "Group added");
-            $newGroup.select().focus();
+            $newGroup.focus();
+            setTimeout(function() { $newGroup.select() }, 10);
           }
         }
       });
@@ -93,9 +97,11 @@ function($, Dialog, Group, Message, Recipient, Settings) {
       
       $("#main .group.container:not(.default) > .name .view").live("click", function() {
         var $name = $(this).parent();
+        var $input = $name.find(".edit.group.text");
         $name.find(".view").hide();
         $name.find(".edit").show();
-        $name.find(".edit.group.text").select().focus();
+        $input.focus();
+        setTimeout(function() { $input.select() }, 10);
       });
       
       $("#main .group.container > .name .edit.group.text").live("blur", function() {
@@ -130,8 +136,10 @@ function($, Dialog, Group, Message, Recipient, Settings) {
             group: $target.closest(".group.container").children(".name").find(".text").text()
           });
         } else if ($target.is(".view.text")) {
+          var $input = $target.siblings(".edit");
           $target.hide();
-          $target.siblings(".edit").data("old-value", $target.text()).show().select().focus();
+          $input.data("old-value", $target.text()).show().focus();
+          setTimeout(function() { $input.select() }, 10);
         }
       });
       
