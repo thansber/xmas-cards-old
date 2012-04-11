@@ -92,3 +92,12 @@ button.green:hover {
 #messages.displayed .close {
     display: inline-block;
 }
+
+#version {
+    color: rgba(255, 255, 255, 1);
+    font-size: 0.6em;
+    position: absolute;
+    right: 1em;
+    top: 0.9em;
+    z-index: 2;
+}

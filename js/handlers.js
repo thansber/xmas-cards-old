@@ -76,7 +76,7 @@ function($, Dialog, Group, Message, Recipient, Settings) {
       $quickbar.find(".arrow").click(function() {
         $quickbar.toggleClass("displayed");
         if (!($quickbar.hasClass("displayed"))) {
-          clearQuickbarError();
+          Message.hide();
         }
         Settings.quickbarDisplayChanged();
       });

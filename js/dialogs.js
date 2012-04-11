@@ -98,7 +98,10 @@ function($, Group, Message, Recipient) {
     show: function(dialogClass, opt) {
       $dialogs.removeClass("hidden");
       var $dialog = findDialog(dialogClass);
-      var displayDialog = function() { $dialog.addClass("displayed"); };
+      var displayDialog = function() { 
+        $dialog.addClass("displayed"); 
+        $("html, body").animate({scrollTop: 0}, "fast");
+      };
       
       if (showCallbacks[dialogClass]) {
         showCallbacks[dialogClass].call(this, $dialog, opt);
