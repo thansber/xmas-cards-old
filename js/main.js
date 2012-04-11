@@ -1,5 +1,6 @@
 require(
-["jquery", "dialogs", "group", "handlers", "io", "message", "recipient", "settings", "lib/jquery.isotope"], 
+["jquery", "dialogs", "group", "handlers", "io", "message", "recipient", "settings", 
+ "lib/jquery-ui-1.8.18.custom.min", "lib/jquery.isotope"], 
 function($, Dialog, Group, Handlers, IO, Message, Recipient, Settings) {
   $(document).ready(function() {
     console.log("starting xmas app");
@@ -15,8 +16,18 @@ function($, Dialog, Group, Handlers, IO, Message, Recipient, Settings) {
     
     $("#main").isotope({
       itemSelector: ".group.container",
+      transformsEnabled: false
     });
     
+    $("#main .roster .entry .name .text").draggable({
+      appendTo: "body",
+      containment: "document",
+      cursor: "crosshair",
+      helper: "clone",
+      revert: "invalid",
+      zIndex: 10
+    });
     
+    $("#main .group.container").droppable(Group.droppableOptions);
   });
 });

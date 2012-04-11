@@ -84,6 +84,13 @@ function($, Dialog, Group, Message, Recipient, Settings) {
       // =====================================
       // ------------ MAIN ROSTER ------------
       // =====================================
+      $("#main .group.container").live("drop", function(event, ui) {
+        var $newGroup = $(this);
+        var $name = $(ui.draggable);
+        var $entry = $name.closest(".entry");
+        Recipient.updateGroup($name.text(), $entry, $newGroup);
+      });
+      
       $("#main .group.container:not(.default) > .name .view").live("click", function() {
         var $name = $(this).parent();
         $name.find(".view").hide();
@@ -122,9 +129,19 @@ function($, Dialog, Group, Message, Recipient, Settings) {
             name: $target.siblings(".text").text(),
             group: $target.closest(".group.container").children(".name").find(".text").text()
           });
+        } else if ($target.is(".view.text")) {
+          $target.hide();
+          $target.siblings(".edit").data("old-value", $target.text()).show().select().focus();
         }
       });
       
+      $("#main .group.container .roster .edit.recipient.name").live("blur", function() {
+        var $this = $(this);
+        var newName = $this.val();
+        Recipient.updateName($this.data("old-value"), newName);
+        $this.hide();
+        $this.siblings(".view").text(newName).show();
+      });
       
       // =====================================
       // -------------- DIALOGS --------------

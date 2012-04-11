@@ -24,7 +24,8 @@ function(Group, IO, Settings) {
     
     markup[m++] = "<li class='entry' data-name='" + name + "'>";
     markup[m++] = "<h4 class='name'>";
-    markup[m++] = "<span class='text'>" + name + "</span>";
+    markup[m++] = "<span class='view text' title='Click to edit or drag to move to another group'>" + name + "</span>";
+    markup[m++] = "<input type='text' class='edit recipient name' value='" + name + "' />";
     markup[m++] = "<a class='delete recipient' title='Delete this recipient'>X</a>";
     markup[m++] = "</h4>";
 
@@ -164,13 +165,14 @@ function(Group, IO, Settings) {
       return true;
     },
     
-    updateGroup: function(name, $entry, newGroupIndex, options) {
+    updateGroup: function(name, $entry, newGroup, options) {
       var opt = $.extend({save:true, rebuild:true}, options);
+      var newGroupIndex = typeof(newGroup) === "number" ? newGroup : Group.findAll().index(newGroup);
       roster[name].group = newGroupIndex;
       
       var $oldGroup = $entry.closest(".group.container");
       var $movedEntry = $entry.detach();
-      var $newGroup = Group.find(newGroupIndex);
+      var $newGroup = typeof(newGroup) === "number" ? Group.find(newGroup) : newGroup;
       $newGroup.find(".roster").append($movedEntry);
       
       if (opt.save) {
@@ -183,6 +185,17 @@ function(Group, IO, Settings) {
       if (opt.rebuild) {
         rebuildLayout();
       }
+    },
+    
+    updateName: function(oldName, newName) {
+      if (oldName === newName) {
+        return;
+      }
+      var data = $.extend(true, {}, roster[oldName]);
+      roster[newName] = data;
+      delete roster[oldName];
+      
+      IO.writeObject(ROSTER_KEY, roster);
     }
   };
 });

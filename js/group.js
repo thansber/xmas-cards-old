@@ -5,6 +5,10 @@ function($, IO, Util) {
   var groups = [];
   var $recipientGroups = null;
   var $groups = null;
+  
+  var droppableOptions = {
+    hoverClass: "drop-hover"
+  };
 
   var DEFAULT_GROUP_NAME = "Unassigned";
   var DEFAULT_GROUP_NAME_REGEX = new RegExp(DEFAULT_GROUP_NAME, "i"); 
@@ -56,9 +60,11 @@ function($, IO, Util) {
       groups.push(name);
       IO.writeObject(GROUP_KEY, groups);
       var $group = newGroup(name, groups.length - 1);
+      $group.droppable(droppableOptions);
       $groups.isotope("appended", $group);
     },
-    
+
+    droppableOptions: droppableOptions,
     find: findGroup,
     findAll: findAllGroups,
     getIndex: getIndex,

@@ -1,5 +1,5 @@
 #main {
-    margin: 2em 1.5em;
+    margin: 1em 0.5em 2em;
     width: 100%;
 }
 
@@ -7,7 +7,7 @@
     border: 2px solid rgba(34, 87, 38, 1);
     border-radius: 10px;
     float: left;
-    margin: 0 1.6em 2em 0;
+    margin: 1em 1.6em 1em 1em;
     padding-bottom: 1em;
     width: 470px;
 }
@@ -16,7 +16,7 @@
     border-color: rgba(153, 153, 153, 1);
 }
 
-#main .group.container .name {
+#main .group.container>.name {
     background: linear-gradient(rgba(93, 156, 70, 1), rgba(61, 104, 50, 1) );
     border-radius: 8px 8px 0 0;
     color: rgba(255, 255, 255, 1);
@@ -72,8 +72,7 @@
 }
 
 #main .group.container .roster .entry {
-    overflow: auto;
-    padding: 1em 1em 0;
+    padding: 1em 1em 1.6em;
 }
 
 #main .group.container .roster .entry .name {
@@ -82,6 +81,11 @@
     color: rgba(0, 0, 0, 1);
     font-size: 1.1em;
     padding: 0;
+    user-select: none;
+}
+
+#main .group.container .roster .entry .edit.recipient.name {
+    font-size: 0.8em;
 }
 
 #main .group.container .roster .entry .name .delete.recipient {
@@ -179,4 +183,18 @@
     padding-top: 1em;
     text-align: center;
     width: 100%;
+}
+
+.group.container.drop-hover {
+    box-shadow: 0 0 12px rgba(34, 87, 38, 1);
+}
+
+.default.group.container.drop-hover {
+    box-shadow: 0 0 12px rgba(96, 96, 96, 1);
+}
+
+.view.ui-draggable-dragging {
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    padding: 0.4em 0.8em;
 }
