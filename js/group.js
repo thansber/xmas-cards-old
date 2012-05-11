@@ -57,6 +57,9 @@ function($, IO, Util) {
       if (DEFAULT_GROUP_NAME_REGEX.test(name)) {
         return {error:"You may not create a group called '" + DEFAULT_GROUP_NAME + "', this is reserved for use by the application."};
       }
+      if (getIndex(name) > -1) {
+        return {error:"There is already a group named '" + name + "', it would be very confusing to add one with the same name."};
+      }
       groups.push(name);
       IO.writeObject(GROUP_KEY, groups);
       var $group = newGroup(name, groups.length - 1);

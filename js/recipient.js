@@ -15,6 +15,36 @@ function(Group, IO, Settings) {
     groupMembershipChanged($group);
   };
   
+  var addWithYears: function(name, groupIndex, yearData, options) {
+    var opt = $.extend({save:true, rebuild:true}, options);
+    
+    if (roster[name]) {
+      return {error:"You have already added someone with the name '" + name + "', each recipient should have a unique name.  Otherwise, you might get confused seeing 2 recipients with the same name."};
+    }
+
+    var years = {};
+    if (yearData) {
+      years = $.extend({}, yearData);
+    } else {
+      years[Settings.getCurrentYear()] = 0;
+    }
+    
+    roster[name] = {
+      group: +groupIndex,
+      years: years
+    };
+    
+    if (opt.save) {
+      saveRoster();
+    }
+    addRecipientToGroup(name);
+    if (opt.rebuild) {
+      rebuildLayout();
+    }
+    
+    return true;
+  }
+  
   var buildRecipientMarkup = function(name) {
     var markup = [];
     var m = 0;
@@ -61,26 +91,37 @@ function(Group, IO, Settings) {
     $("#main").isotope("reLayout");
   };
   
+  var saveRoster = function() {
+    IO.writeObject(ROSTER_KEY, roster);
+  };
+  
+  var updateYear = function(name, year, sr, done) {
+    var entry = roster[name];
+    
+    if (!entry) {
+      console.error("No roster entry found for [" + name + "]");
+      return false;
+    }
+    
+    var flag = (sr === "sent" ? SENT_FLAG : sr === "received" ? RECEIVED_FLAG : 0);
+    
+    if (!flag) {
+      console.error("Invalid value for sent/received [" + sr + "]");
+      return false;
+    }
+    
+    if (done) {
+      entry.years[+year] |= flag;
+    } else {
+      entry.years[+year] &= ~flag;
+    }
+    
+    return true;
+  }
+  
   return {
     add: function(name, groupIndex) {
-
-      if (roster[name]) {
-        return {error:"You have already added someone with the name '" + name + "', each recipient should have a unique name.  Otherwise, you might get confused seeing 2 recipients with the same name."};
-      }
-      
-      var years = {};
-      years[Settings.getCurrentYear()] = 0;
-      
-      roster[name] = {
-        group: +groupIndex,
-        years: years
-      };
-      
-      IO.writeObject(ROSTER_KEY, roster);
-      addRecipientToGroup(name);
-      rebuildLayout();
-      
-      return true;
+      return addWithYears(name, groupIndex);
     },
     
     adjustGroupIndexes: function(deletedGroupIndex) {
@@ -105,7 +146,7 @@ function(Group, IO, Settings) {
       roster = IO.readObject(ROSTER_KEY);
       if (!roster) {
         roster = {};
-        IO.writeObject(ROSTER_KEY, roster);
+        saveRoster();
       }
       
       for (var name in roster) {
@@ -133,34 +174,15 @@ function(Group, IO, Settings) {
       }
     },
     
-    saveRoster: function() {
-      IO.writeObject(ROSTER_KEY, roster);
-    },
+    saveRoster: saveRoster,
     
     update: function(name, year, $button) {
-      var entry = roster[name];
-      
-      if (!entry) {
-        console.error("No roster entry found for [" + name + "]");
+      var sentReceived = $button.hasClass("sent") ? "sent" : ($button.hasClass("received") ? "received" : "unknown");
+      if (!updateYear(name, year, sentReceived, $button.hasClass("done")) {
         return false;
       }
       
-      var flag = $button.hasClass("sent") ? SENT_FLAG : ($button.hasClass("received") ? RECEIVED_FLAG : 0);
-      
-      if (!flag) {
-        console.error("Button clicked did not have one of the expected classes");
-        return false;
-      }
-      
-      var done = $button.hasClass("done");
-      
-      if (done) {
-        entry.years[+year] |= flag;
-      } else {
-        entry.years[+year] &= ~flag;
-      }
-      
-      IO.writeObject(ROSTER_KEY, roster);
+      saveRoster();
       
       return true;
     },
@@ -176,7 +198,7 @@ function(Group, IO, Settings) {
       $newGroup.find(".roster").append($movedEntry);
       
       if (opt.save) {
-        IO.writeObject(ROSTER_KEY, roster);
+        saveRoster();
       }
 
       groupMembershipChanged($oldGroup);
@@ -195,7 +217,9 @@ function(Group, IO, Settings) {
       roster[newName] = data;
       delete roster[oldName];
       
-      IO.writeObject(ROSTER_KEY, roster);
-    }
+      saveRoster();
+    },
+    
+    updateYear: updateYear
   };
 });

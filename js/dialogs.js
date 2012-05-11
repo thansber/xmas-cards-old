@@ -69,6 +69,9 @@ function($, Group, Message, Recipient) {
     "delete.recipient": function($dialog, opt) {
       $dialog.find(".recipient.name").text(opt.name);
       $dialog.data({name:opt.name, group:opt.group});
+    },
+    "migrate": function($dialog, opt) {
+      $dialog.trigger("migration.start");
     }
   };
   

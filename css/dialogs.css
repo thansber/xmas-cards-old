@@ -120,3 +120,17 @@
 #dialogs .delete.group.empty .confirmation {
     display: inline-block;
 }
+
+/* ===================================== */
+/* ---------- MIGRATE DIALOG  ---------- */
+/* ===================================== */
+#dialogs .migrate .complete {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.4s;
+    transition-timing-function: ease;
+}
+
+#dialogs .migrate .complete.displayed {
+    opacity: 1;
+}
