@@ -44,7 +44,7 @@ function($, Dialog, Group, Message, Recipient, Settings) {
         Message.hide();
         
         if ($target.hasClass("recipient")) { 
-          var result = Recipient.add($newRecipient.val(), $newRecipientGroup.val());
+          var result = Recipient.add($newRecipient.val(), $newRecipientGroup.val(), {append:false});
           if (result.error) {
             Message.show(result.error, {type:Message.Types.Error});
           } else {

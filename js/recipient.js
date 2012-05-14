@@ -3,6 +3,7 @@ define( /* Recipient */
 function(Group, IO, Settings) {
   
   var roster = {};
+  var sortedNames = [];
   
   var $header = null;
   
@@ -10,20 +11,42 @@ function(Group, IO, Settings) {
   var SENT_FLAG = 2;
   var RECEIVED_FLAG = 1;
   
-  var addRecipientToGroup = function(name) {
+  var addRecipientToGroup = function(name, appending) {
     var entry = roster[name];
     var $group = Group.find(entry.group);
     var $entry = buildRecipientMarkup(name);
-    $group.find(".roster").append($entry);
+    var $roster = $group.find(".roster");
+    
+    if (appending) {
+      $roster.append($entry);
+    } else {
+      // Build an array of the existing names
+      var namesInGroup = $.map($roster.find("li"), function(li) {
+        return $(li).data("name");
+      });
+      // Add the new one and sort this array
+      namesInGroup.push(name);
+      namesInGroup.sort(sortByName);
+      // Insert the new entry using its new position before the entry that used to take its place
+      var newIndex = namesInGroup.indexOf(name);
+      if (newIndex === namesInGroup.length - 1) {
+        $roster.append($entry);
+      } else {
+        $entry.insertBefore($roster.find("li").eq(newIndex));
+      }
+    }
     groupMembershipChanged($group);
   };
   
   var addWithYears = function(name, groupIndex, options) {
-    var opt = $.extend({save:true, rebuild:true, recalculate:true}, options);
+    var opt = $.extend({save:true, rebuild:true, recalculate:true, append:true}, options);
     
     if (roster[name]) {
       return {error:"You have already added someone with the name '" + name + "', each recipient should have a unique name.  Otherwise, you might get confused seeing 2 recipients with the same name."};
     }
+    
+    sortedNames.push(name);
+    sortRoster();
 
     var years = {};
     years[Settings.getCurrentYear()] = 0;
@@ -36,7 +59,7 @@ function(Group, IO, Settings) {
     if (opt.save) {
       saveRoster();
     }
-    addRecipientToGroup(name);
+    addRecipientToGroup(name, opt.append);
     if (opt.rebuild) {
       rebuildLayout();
     }
@@ -139,6 +162,16 @@ function(Group, IO, Settings) {
     IO.writeObject(ROSTER_KEY, roster);
   };
   
+  var sortByName = function(a, b) {
+    var lowerA = a.toLowerCase();
+    var lowerB = b.toLowerCase();
+    return (lowerA === lowerB) ? 0 : (lowerA > lowerB ? 1 : -1);
+  };
+  
+  var sortRoster = function() {
+    sortedNames.sort(sortByName);
+  };
+  
   var updateCounts = function() {
     var counts = calculateSummaryCounts();
     var summaryLines = ["total", "sent", "received"];
@@ -206,7 +239,13 @@ function(Group, IO, Settings) {
       }
       
       for (var name in roster) {
-        addRecipientToGroup(name);
+        sortedNames.push(name);
+      }
+      
+      sortRoster();
+      
+      for (var i = 0; i < sortedNames.length; i++) {
+        addRecipientToGroup(sortedNames[i], true);
       }
       
       $header = $("#summaryCounts");
@@ -219,6 +258,10 @@ function(Group, IO, Settings) {
     remove: function(name, $entry, options) {
       var opt = $.extend({save:true, rebuild:true, recalculate:true}, options);
       delete roster[name];
+      var sortedNameIndex = sortedNames.indexOf(name);
+      if (sortedNameIndex > -1) {
+        sortedNames.splice(sortedNameIndex, 1);
+      }
       
       var $group = $entry.closest(".group.container");
       $entry.remove();

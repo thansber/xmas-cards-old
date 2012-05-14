@@ -3,7 +3,6 @@ require(
  "lib/jquery-ui-1.8.18.custom.min", "lib/jquery.isotope"], 
 function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings) {
   $(document).ready(function() {
-    console.log("starting xmas app");
     IO.init();
     Message.init();
     Handlers.init();

@@ -17,7 +17,7 @@
     z-index: 2;
 }
 
-#dialogs .migrate.dialog ~ .background {
+#dialogs .migrate.dialog.displayed ~ .background {
     opacity: 1;
 }
 
