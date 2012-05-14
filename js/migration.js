@@ -51,6 +51,7 @@ function($, Dialog, Group, IO, Recipient, Settings) {
   
   var migrateRoster = function() {
     var currentYear = Settings.getCurrentYear();
+    var addOptions = {save:false, rebuild:false, recalculate:false};
     
     for (var i = localStorage.length - 1; i >= 0; i--) {
       var name = localStorage.key(i);
@@ -58,7 +59,7 @@ function($, Dialog, Group, IO, Recipient, Settings) {
       if (isOldPerson(entry)) {
         var groupIndex = Group.getIndex(entry.group);
         console.log("migrating " + name + " to group " + entry.group + ", group index " + groupIndex);
-        Recipient.add(name, groupIndex);
+        Recipient.add(name, groupIndex, addOptions);
         
         for (var y = 0; y < 3; y++) {
           var year = +currentYear - y;
@@ -71,6 +72,8 @@ function($, Dialog, Group, IO, Recipient, Settings) {
         localStorage.removeItem(name);
       } 
     }
+    
+    Recipient.saveRoster();
   }
   
   var removeOldUnusedEntries = function() {

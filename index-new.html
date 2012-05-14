@@ -30,6 +30,12 @@
 
 <div id="messages"><span class="text"></span><a class="close" title="Hide this message">X</a></div>
 
+<header id="summaryCounts">
+  <p class="total summary"><span class="count">0</span> <span class="multiple">people are</span><span class="single">person is</span> on your Christmas Card list.</p>
+  <p class="sent summary"><span class="count">0</span> <span class="multiple">people have</span><span class="single">person has</span> been sent a Christmas Card in <span class="currentYear"></span>.</p>
+  <p class="received summary"><span class="count">0</span> <span class="multiple">people have</span><span class="single">person has</span> sent you a Christmas Card in <span class="currentYear"></span>.</p>
+</header>
+
 <section id="main">
   <div class="default group container">
     <h3 class="name"><span class="text">Unassigned</span> <span class="count"></span></h3>
@@ -40,10 +46,11 @@
 
 <section id="dialogs" class="hidden">
   <section class="migrate dialog">
-    <h1>Data Migration<a class="close">X</a></h1>
+    <h1>Data Migration</h1>
     <div class="content">
       We are currently migrating your data to our new format in preparation for the new layout...
-      <img src="images/ajax-loader.gif" class="loader" /><span class="complete">migration complete.</span>
+      <img src="images/ajax-loader.gif" class="loader" /><span class="complete">migration complete.  
+      <br/>Please reload the page to view your migrated roster.</span>
     </div>
   </section>
   

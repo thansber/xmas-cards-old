@@ -18,15 +18,15 @@ function($, Group, Message, Recipient) {
           var selectedChoice = $recipientDecision.find("input[name='recipient-choice']:checked").val();
           var $group = Group.find(groupIndex);
           var $entries = $group.find(".roster .entry");
-          var doNotSaveOrRebuild = {save:false, rebuild:false};
+          var deferUpdates = {save:false, rebuild:false, recalculate:false};
           
           if (selectedChoice === "move") {
             $.each(members, function(i, name) {
-              Recipient.updateGroup(name, $entries.eq(i), -1, doNotSaveOrRebuild);
+              Recipient.updateGroup(name, $entries.eq(i), -1, deferUpdates);
             });
           } else if (selectedChoice === "delete") {
             $.each(members, function(i, name) {
-              Recipient.remove(name, $entries.eq(i), doNotSaveOrRebuild);
+              Recipient.remove(name, $entries.eq(i), deferUpdates);
             });
           }
         }
@@ -35,6 +35,7 @@ function($, Group, Message, Recipient) {
         Recipient.adjustGroupIndexes(groupIndex);
         Recipient.saveRoster();
         Recipient.rebuildLayout();
+        Recipient.updateCounts();
         
         Message.show(name + " has been deleted.");
         hide();

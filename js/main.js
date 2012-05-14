@@ -1,5 +1,5 @@
 require(
-["jquery", "dialogs", "group", "handlers", "io", "message", "migration", "recipient", "settings", 
+["jquery", "dialogs", "group", "handlers", "io", "message", "migration", "recipient", "settings",
  "lib/jquery-ui-1.8.18.custom.min", "lib/jquery.isotope"], 
 function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings) {
   $(document).ready(function() {

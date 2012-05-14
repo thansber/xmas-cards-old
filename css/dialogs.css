@@ -17,6 +17,10 @@
     z-index: 2;
 }
 
+#dialogs .migrate.dialog ~ .background {
+    opacity: 1;
+}
+
 #dialogs h1 {
     background: linear-gradient(#037710, #2DB750);
     border: 2px solid #333333;

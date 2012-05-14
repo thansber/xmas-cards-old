@@ -4,6 +4,8 @@ function(Group, IO, Settings) {
   
   var roster = {};
   
+  var $header = null;
+  
   var ROSTER_KEY = "XMAS_CARDS_ROSTER";
   var SENT_FLAG = 2;
   var RECEIVED_FLAG = 1;
@@ -11,23 +13,20 @@ function(Group, IO, Settings) {
   var addRecipientToGroup = function(name) {
     var entry = roster[name];
     var $group = Group.find(entry.group);
-    $group.find(".roster").append(buildRecipientMarkup(name));
+    var $entry = buildRecipientMarkup(name);
+    $group.find(".roster").append($entry);
     groupMembershipChanged($group);
   };
   
-  var addWithYears: function(name, groupIndex, yearData, options) {
-    var opt = $.extend({save:true, rebuild:true}, options);
+  var addWithYears = function(name, groupIndex, options) {
+    var opt = $.extend({save:true, rebuild:true, recalculate:true}, options);
     
     if (roster[name]) {
       return {error:"You have already added someone with the name '" + name + "', each recipient should have a unique name.  Otherwise, you might get confused seeing 2 recipients with the same name."};
     }
 
     var years = {};
-    if (yearData) {
-      years = $.extend({}, yearData);
-    } else {
-      years[Settings.getCurrentYear()] = 0;
-    }
+    years[Settings.getCurrentYear()] = 0;
     
     roster[name] = {
       group: +groupIndex,
@@ -41,9 +40,13 @@ function(Group, IO, Settings) {
     if (opt.rebuild) {
       rebuildLayout();
     }
-    
+    if (opt.recalculate) {
+      updateCounts();
+    }
+  
     return true;
-  }
+  };
+  
   
   var buildRecipientMarkup = function(name) {
     var markup = [];
@@ -60,14 +63,16 @@ function(Group, IO, Settings) {
     markup[m++] = "</h4>";
 
     for (var i = currentYear; i > currentYear - 3; i--) {
-      var status = +entry.years[""+ i];
-      if (status !== null && status !== undefined) {
-        var sent = status & SENT_FLAG;
-        var received = status & RECEIVED_FLAG;
-        markup[m++] = "<div class='" + (!sent && !received ? "empty " : "") + (i === currentYear ? "current " : "") + "year-wrapper'>";
+      var yearData = entry.years[""+ i];
+      var status = parseYearStatus(yearData);
+      if (yearData !== null && yearData !== undefined) {
+        if (!status) {
+          status = {};
+        }
+        markup[m++] = "<div class='" + (!status.sent && !status.received ? "empty " : "") + (i === currentYear ? "current " : "") + "year-wrapper'>";
         markup[m++] = "<span class='year'>" + i + "</span>";
-        markup[m++] = "<span class='" + (sent ? "done " : "") + "sent'>Sent</span>";
-        markup[m++] = "<span class='" + (received ? "done " : "") + "received'>Recv'd</span>";
+        markup[m++] = "<span class='" + (status.sent ? "done " : "") + "sent'>Sent</span>";
+        markup[m++] = "<span class='" + (status.received ? "done " : "") + "received'>Recv'd</span>";
         markup[m++] = "</div>"
       }
     }
@@ -77,14 +82,53 @@ function(Group, IO, Settings) {
     return $(markup.join(""));
   };
   
+  var calculateSummaryCounts = function() {
+    var total = 0;
+    var sent = 0;
+    var received = 0;
+    var currentYear = Settings.getCurrentYear();
+    for (var name in roster) {
+      var entry = roster[name];
+      var status = parseYearStatus(entry.years[currentYear]);
+      if (status) {
+        if (status.sent) {
+          sent++;
+        }
+        if (status.received) {
+          received++;
+        }
+      }
+      
+      total++;
+    }
+    
+    return {total:total, sent:sent, received:received};
+  }
+  
   var getNumGroupMembers = function($group) {
     return $group.find(".roster .entry").length;
   };
   
   var groupMembershipChanged = function($group) {
-    var numMembers = $group.find(".roster .entry").length;
-    $group.find(".empty.message").toggle(getNumGroupMembers($group) === 0);
+    var numMembers = getNumGroupMembers($group);
+    $group.find(".empty.message").toggle(numMembers === 0);
     $group.find(".name .count").text("(" + numMembers + ")");
+  };
+  
+  var parseYearStatus = function(yearData) {
+    if (!yearData) {
+      return null;
+    }
+    
+    var status = +yearData;
+    if (status === null || status === undefined) {
+      return null;
+    }
+    
+    return {
+      sent: status & SENT_FLAG,
+      received: status & RECEIVED_FLAG
+    };
   };
   
   var rebuildLayout = function() {
@@ -95,6 +139,16 @@ function(Group, IO, Settings) {
     IO.writeObject(ROSTER_KEY, roster);
   };
   
+  var updateCounts = function() {
+    var counts = calculateSummaryCounts();
+    var summaryLines = ["total", "sent", "received"];
+    
+    for (var i in summaryLines) {
+      var type = summaryLines[i];
+      $header.find("." + type).toggleClass("single", counts[type] === 1).find(".count").text(counts[type]);
+    }
+  };
+  
   var updateYear = function(name, year, sr, done) {
     var entry = roster[name];
     
@@ -103,7 +157,7 @@ function(Group, IO, Settings) {
       return false;
     }
     
-    var flag = (sr === "sent" ? SENT_FLAG : sr === "received" ? RECEIVED_FLAG : 0);
+    var flag = (sr === "sent" ? SENT_FLAG : (sr === "received" ? RECEIVED_FLAG : 0));
     
     if (!flag) {
       console.error("Invalid value for sent/received [" + sr + "]");
@@ -117,11 +171,11 @@ function(Group, IO, Settings) {
     }
     
     return true;
-  }
+  };
   
   return {
-    add: function(name, groupIndex) {
-      return addWithYears(name, groupIndex);
+    add: function(name, groupIndex, opt) {
+      return addWithYears(name, groupIndex, opt);
     },
     
     adjustGroupIndexes: function(deletedGroupIndex) {
@@ -131,6 +185,8 @@ function(Group, IO, Settings) {
         }
       }
     },
+    
+    calculateSummaryCounts: calculateSummaryCounts,
     
     getGroupMembers: function(groupIndex) { 
       var memberNames = [];
@@ -152,19 +208,23 @@ function(Group, IO, Settings) {
       for (var name in roster) {
         addRecipientToGroup(name);
       }
+      
+      $header = $("#summaryCounts");
+      $header.find(".currentYear").text(Settings.getCurrentYear());
+      updateCounts();
     },
     
     rebuildLayout: rebuildLayout,
     
     remove: function(name, $entry, options) {
-      var opt = $.extend({save:true, rebuild:true}, options);
+      var opt = $.extend({save:true, rebuild:true, recalculate:true}, options);
       delete roster[name];
       
       var $group = $entry.closest(".group.container");
       $entry.remove();
       
       if (opt.save) {
-        IO.writeObject(ROSTER_KEY, roster);
+        saveRoster();
       }
       
       groupMembershipChanged($group);
@@ -172,20 +232,33 @@ function(Group, IO, Settings) {
       if (opt.rebuild) {
         rebuildLayout();
       }
+      
+      if (opt.recalculate) {
+        updateCounts();
+      }
     },
     
     saveRoster: saveRoster,
     
     update: function(name, year, $button) {
-      var sentReceived = $button.hasClass("sent") ? "sent" : ($button.hasClass("received") ? "received" : "unknown");
-      if (!updateYear(name, year, sentReceived, $button.hasClass("done")) {
+      var sentReceived = "unknown";
+      if ($button.hasClass("sent")) {
+        sentReceived = "sent";
+      } else if ($button.hasClass("received")) {
+        sentReceived = "received";
+      }
+      
+      if (!updateYear(name, year, sentReceived, $button.hasClass("done"))) {
         return false;
       }
       
       saveRoster();
+      updateCounts();
       
       return true;
     },
+    
+    updateCounts: updateCounts,
     
     updateGroup: function(name, $entry, newGroup, options) {
       var opt = $.extend({save:true, rebuild:true}, options);
