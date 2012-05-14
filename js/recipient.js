@@ -20,20 +20,7 @@ function(Group, IO, Settings) {
     if (appending) {
       $roster.append($entry);
     } else {
-      // Build an array of the existing names
-      var namesInGroup = $.map($roster.find("li"), function(li) {
-        return $(li).data("name");
-      });
-      // Add the new one and sort this array
-      namesInGroup.push(name);
-      namesInGroup.sort(sortByName);
-      // Insert the new entry using its new position before the entry that used to take its place
-      var newIndex = namesInGroup.indexOf(name);
-      if (newIndex === namesInGroup.length - 1) {
-        $roster.append($entry);
-      } else {
-        $entry.insertBefore($roster.find("li").eq(newIndex));
-      }
+      sortGroupEntries(name, $entry);
     }
     groupMembershipChanged($group);
   };
@@ -69,7 +56,6 @@ function(Group, IO, Settings) {
   
     return true;
   };
-  
   
   var buildRecipientMarkup = function(name) {
     var markup = [];
@@ -126,7 +112,15 @@ function(Group, IO, Settings) {
     }
     
     return {total:total, sent:sent, received:received};
-  }
+  };
+  
+  var getEntry = function(name) {
+    var $group = Group.find(roster[name].group);
+    if ($group.length === 0) {
+      return null;
+    }
+    return $group.find(".roster li[data-name='" + name + "']");
+  };
   
   var getNumGroupMembers = function($group) {
     return $group.find(".roster .entry").length;
@@ -166,6 +160,28 @@ function(Group, IO, Settings) {
     var lowerA = a.toLowerCase();
     var lowerB = b.toLowerCase();
     return (lowerA === lowerB) ? 0 : (lowerA > lowerB ? 1 : -1);
+  };
+  
+  var sortGroupEntries = function(name, $entry) {
+    
+    var $group = Group.find(roster[name].group);
+    var $roster = $group.find(".roster");
+    var $entries = $roster.find("li");
+    
+    // Build an array of the existing names
+    var namesInGroup = $.map($entries, function(item) {
+      return $(item).data("name");
+    });
+    // Add the new one and sort this array
+    namesInGroup.push(name);
+    namesInGroup.sort(sortByName);
+    // Insert the new entry using its new position before the entry that used to take its place
+    var newIndex = namesInGroup.indexOf(name);
+    if (newIndex === namesInGroup.length - 1) {
+      $roster.append($entry);
+    } else {
+      $entry.insertBefore($entries.eq(newIndex));
+    }
   };
   
   var sortRoster = function() {
@@ -311,7 +327,7 @@ function(Group, IO, Settings) {
       var $oldGroup = $entry.closest(".group.container");
       var $movedEntry = $entry.detach();
       var $newGroup = typeof(newGroup) === "number" ? Group.find(newGroup) : newGroup;
-      $newGroup.find(".roster").append($movedEntry);
+      sortGroupEntries(name, $movedEntry);
       
       if (opt.save) {
         saveRoster();
@@ -330,10 +346,24 @@ function(Group, IO, Settings) {
         return;
       }
       var data = $.extend(true, {}, roster[oldName]);
+      var $entry = getEntry(oldName);
+
       roster[newName] = data;
       delete roster[oldName];
       
+      var $newEntry = null;
+      
+      if ($entry.length > 0) {
+        $newEntry = $entry.detach();
+        sortedNames[sortedNames.indexOf(oldName)] = newName;
+        sortRoster();
+        sortGroupEntries(newName, $newEntry);
+        $newEntry.data("name", newName);
+      }
+      
       saveRoster();
+      
+      return $newEntry;
     },
     
     updateYear: updateYear

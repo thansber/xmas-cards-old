@@ -143,12 +143,27 @@ function($, Dialog, Group, Message, Recipient, Settings) {
         }
       });
       
-      $("#main .group.container .roster .edit.recipient.name").live("blur", function() {
+      $("#main .edit.recipient.name").live("blur", function() {
         var $this = $(this);
         var newName = $this.val();
-        Recipient.updateName($this.data("old-value"), newName);
-        $this.hide();
-        $this.siblings(".view").text(newName).show();
+        var $newEntry = Recipient.updateName($this.data("old-value"), newName);
+        
+        if ($newEntry) {
+          $newEntry
+            .find(".edit.recipient.name").hide().end()
+            .find(".view").text(newName).show();
+        } else { // no changes
+          $this.hide().siblings(".view").text(newName).show();
+        }
+      });
+      
+      $("#main .edit.recipient.name").live("keyup", function(e) {
+        var $this = $(this);
+        switch (e.keyCode) {
+          case 13:
+            $this.blur();
+            break;
+        }
       });
       
       // =====================================
