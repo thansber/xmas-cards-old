@@ -36,13 +36,14 @@ function($, Dialog, Group, IO, Recipient, Settings) {
   };
   
   var migrateGroups = function() {
-    var oldGroups = IO.readObject(OLD_GROUPS);
+    var oldGroups = IO.read(OLD_GROUPS);
     if (!oldGroups) {
       return;
     }
     
-    var oldGroupArray = oldGroups.split("|");
+    var oldGroupArray = oldGroups.replace(/\"/g, "").split("|");
     for (var i = 0; i < oldGroupArray.length; i++) {
+      console.log("migrating group " + oldGroupArray[i]);
       Group.add(oldGroupArray[i]);
     }
     
@@ -86,7 +87,7 @@ function($, Dialog, Group, IO, Recipient, Settings) {
     
     init: function() {
       $dialog = $("#dialogs .migrate.dialog");
-      //loadOldData(); // TODO: remove this
+      loadOldData(); // TODO: remove this
       
       $dialog.on("migration.start", function() {
         setTimeout(function() {
