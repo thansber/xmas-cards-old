@@ -2,197 +2,99 @@
 <html>
 <head>
   <title>Christmas Cards</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=8" />
-  <link type="text/css" rel="stylesheet" href="css/old/xmas_cards.css"/>
-  <link type="text/css" rel="stylesheet" media="print" href="css/old/print.css"/>
-  <script type="text/javascript" src="js/old/jquery-1.6.2.min.js"></script>
-  <script type="text/javascript" src="js/old/json.js"></script>
-  <script type="text/javascript" src="js/old/xmas_test_data.js"></script>
-  <script type="text/javascript" src="js/old/xmas_io.js"></script>
-  <script type="text/javascript" src="js/old/xmas_options.js"></script>
-  <script type="text/javascript" src="js/old/xmas_sorting.js"></script>
-  <script type="text/javascript" src="js/old/xmas_ui.js"></script>
-  <script type="text/javascript" src="js/old/xmas_init.js"></script>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/quickbar.css"/>
+  <link rel="stylesheet" href="css/roster.css"/>
+  <link rel="stylesheet" href="css/dialogs.css"/>
+  <link rel="stylesheet" href="css/print.css" media="print"/>
 </head>
+
 <body>
-
-<div id="header">
-  <div id="version">v2.9999998</div>
-  <div id="numTotal" class="total">
-    You have <span id="totalValue" class="value"></span> total recipient(s).
-  </div>
-  <div id="numSent" class="total">
-    You have sent something to <span id="sentValue" class="value"></span> recipient(s) for <span class="currentYear"></span>.
-  </div>
-  <div id="numReceived" class="total">
-    You have recieved something from <span id="receivedValue" class="value"></span> recipient(s) for <span class="currentYear"></span>.
-  </div>
-</div>
-<table id="roster">
-  <thead></thead>
-  <tbody></tbody>
-</table>
-<div id="footer">
-  <div class="save options">
-    <h2 class="curve tl bl">Save</h2>
-    <p class="arrow down" />
-    <div class="content">
-      <p id="save" class="action"><a href="javascript:;">Save changes</a></p>
-      <p class="success save">Changes saved</p>
-    </div>
-  </div>
-  
-  <div class="maintenance options">
-    <h2 class="curve tl bl">Maintenance</h2>
-    <p class="arrow down" />
-    <div class="content">
-      <p id="addEntry" class="action"><a href="javascript:;">Add new recipient</a></p>
-      <p id="editEntry" class="action"><a href="javascript:;">Modify recipient</a></p>
-      <p id="deleteEntry" class="action"><a href="javascript:;">Delete recipient</a></p>
-      <p id="yearSetup" class="action"><a href="javascript:;">Year setup</a></p>
-      <p id="otherEventSetup" class="action"><a href="javascript:;">Other events</a></p>
-      <p id="groupsOn" class="action"><a class="group toggle" href="javascript:;">Turn on groups</a></p>
-      <p id="groupsOff" class="action"><a class="group toggle" href="javascript:;">Turn off groups</a></p>
-      <p class="success entry">Recipient saved</p>
-      <p class="success delete">Recipient deleted</p>
-      <p id="groupOnMessage">Groups are ON</p>
-    </div>
-  </div>
-
-  <div class="sort options">
-    <h2 class="curve tl bl">Sorting</h2>
-    <p class="arrow down" />
-    <div class="content">
-      <p id="groupSort"><a href="javascript:;">Sort by group</a></p>
-      <p id="nameSort"><a href="javascript:;">Sort by name</a></p>
-      <p id="sentSort"><a href="javascript:;">Sort by sent</a></p>
-      <p id="receivedSort"><a href="javascript:;">Sort by received</a></p>
-    </div>
-  </div>
-  
-  <div class="admin options">
-    <h2 class="curve tl bl">Admin</h2>
-    <p class="arrow down" />
-    <div class="content">
-      <p id="backupData"><a href="javascript:;">Backup data</a></p>
-      <p id="importData"><a href="javascript:;">Import data</a></p>
-      <p id="importTestData"><a href="javascript:;">Import test data</a></p>
-    </div>
-  </div>
+<div id="version">v3.0</div>
+<div id="quickbar">
+  <section class="recipient">
+    <input type="text" id="newRecipient" class="new recipient helpful" title="Add a new recipient" value="" /> to
+    <select id="recipientGroup" class="new recipient group">
+      <option value="-1">-- Select a Group --</option>
+    </select>
+    <button class="add recipient green">Save</button>
+    <span class="success message"></span>
+  </section>
+  <section class="group">
+    <input type="text" id="newGroup" class="new group helpful" title="Add a new group" value="" />
+    <button class="add group green">Save</button>
+    <span class="success message"></span>
+  </section>
+  <div class="arrow"></div>
 </div>
 
-<div id="dialogs">
+<div id="messages"><span class="text"></span><a class="close" title="Hide this message">X</a></div>
 
-  <!--  Year setup dialog -->
-  <div id="years" class="dialog">
-    <h3>Year Setup <a class="close" href="javascript:;">Close</a></h3>
-    <div class="content">
-      <div class="field">
-        <label>Current year:</label>
-        <p class="year value"><input id="currentYear" size="4" maxlength="4" /></p>
-      </div>
-      <div class="field">
-        <label>How many previous years' worth of data do you have?</label>
-        <p class="prev year value"><input id="prevYears" size="2" maxlength="2" /></p>
-      </div>
-      <div class="actions">
-        <button class="save">Save</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Other events setup dialog -->
-  <div id="otherEvents" class="dialog">
-    <h3>Other Events <a class="close" href="javascript:;">Close</a></h3>
-    <div class="content">
-      <div class="field">
-        <label>Create a new event:</label>
-        <p class="value"><input type="text" class="event" /></p>
-      </div>
-      <div class="field">
-        <label>-- OR --</label>
-      </div>
-      <div class="field">
-        <label>Select an existing event:</label>
-        <p class="existingEvent value"><select class="event"></select></p>
-      </div>
-      <div class="actions">
-        <button class="save">Create new event</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- New roster entry dialog -->
-  <div id="entry" class="dialog">
-    <h3><span class="new">New Recipient</span><span class="edit">Modify Existing Recipient</span> <a class="close" href="javascript:;">Close</a></h3>
-    <div class="content">
-      <div class="field edit">
-        <label>Select recipient to modify:</label>
-        <p class="entry modify value"><select id="existingEntries"></select></p>
-      </div>
-      <div class="field">
-        <label>Name:</label>
-        <p class="name value"><input type="text" id="entryName" /></p>
-      </div>
-      <div class="field">
-        <label>Select a group:</label>
-        <p class="existingGroup value"><select id="existingGroups"></select></p>
-      </div>
-      <div class="field new">
-        <label>--  OR --</label>
-      </div>
-      <div class="field new">
-        <label>Create a new group:</label>
-        <p class="newGroup value"><input type="text" id="entryGroup" /></p>
-      </div>
-      <table id="entryPrevYears">
-        <thead>
-          <tr>
-            <th class="empty">&nbsp;</th>
-            <th>Sent?</th>
-            <th>Received?</th>
-          </tr>
-        </thead>
-        <tbody><!--  Populated by Javascript --></tbody>
-      </table>
-      <div class="actions">
-        <button class="save">Save Recipient</button>
-      </div>
-    </div>
-  </div>
-  
-  <!--  Delete roster entry dialog -->
-  <div id="entryDelete" class="dialog">
-    <h3>Delete Existing Recipient <a class="close" href="javascript:;">Close</a></h3>
-    <div class="content">
-      <div class="field">
-        <label>Select recipient to delete:</label>
-        <p class="entry delete value"><select id="existingDeleteEntries"></select></p>
-      </div>
-      <div class="actions">
-        <button class="delete">Delete Recipient</button>
-      </div>
-    </div>
-  </div>
-  
-  <div id="dataTransfer" class="dialog">
-  	<h3><span class="import">Import</span><span class="export">Backup</span> Data <a class="close" href="javascript:;">Close</a></h3>
-  	<div class="content">
-      <div class="field import">
-        <label>Enter the data you wish to import:</label>
-        <p class="value"><textarea rows="10" cols="80"></textarea></p>
-      </div>
-      <div class="field export">
-        <label>Copy the contents and save it to a file in case you wish to import it later:</label>
-        <p class="value"><textarea rows="10" cols="80"></textarea></p>
-      </div>
-      <div class="actions">
-        <button class="import">Import Data</button>
-      </div>
-    </div>
-  </div>
-  
-</div>
+<header id="summaryCounts">
+  <p class="total summary"><span class="count">0</span> <span class="multiple">people are</span><span class="single">person is</span> on your Christmas Card list.</p>
+  <p class="sent summary"><span class="count">0</span> <span class="multiple">people have</span><span class="single">person has</span> been sent a Christmas Card in <span class="currentYear"></span>.</p>
+  <p class="received summary"><span class="count">0</span> <span class="multiple">people have</span><span class="single">person has</span> sent you a Christmas Card in <span class="currentYear"></span>.</p>
+</header>
 
+<section id="main">
+  <div class="default group container">
+    <h3 class="name"><span class="text">Unassigned</span> <span class="count"></span></h3>
+    <ul class="roster"></ul>
+    <span class="empty message">Nobody has been added yet</span>
+  </div>
+</section>
+
+<section id="dialogs" class="hidden">
+  <section class="migrate dialog">
+    <h1>Data Migration</h1>
+    <div class="content">
+      We are currently migrating your data to our new format in preparation for the new layout...
+      <img src="images/ajax-loader.gif" class="loader" /><span class="complete">migration complete.  
+      <br/>Please reload the page to view your migrated roster.</span>
+    </div>
+  </section>
+  
+  <section class="delete recipient dialog">
+    <h1>Delete Recipient<a class="close">X</a></h1>
+    <div class="content">
+      Are you sure you want to delete <span class="recipient name"></span>?
+      <div class="actions">
+        <button class="cancel red">No, leave <span class="recipient name"></span> alone</button>
+        <button class="confirm green">Yes, remove <span class="recipient name"></span></button>
+      </div>
+    </div>
+  </section>
+  
+  <section class="delete group dialog">
+    <h1>Delete Group<a class="close">X</a></h1>
+    <div class="content">
+      <div class="confirmation message">Are you sure you want to delete <span class="group name"></span>?</div>
+      <div class="recipient decision message">What do you want to do with the <span class="member count"></span> member(s) that are in <span class="group name"></span>?
+        <div class="choice first">
+          <input type="radio" name="recipient-choice" id="recipient-choice-move" value="move" checked />
+          <label for="recipient-choice-move">Move them to the Unassigned group</label>
+        </div>
+        <div class="choice last">
+          <input type="radio" name="recipient-choice" id="recipient-choice-delete" value="delete" />
+          <label for="recipient-choice-delete">Delete them along with the <span class="group name"></span> group</label>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="cancel red confirmation">No, leave <span class="group name"></span> alone</button>
+        <button class="confirm green confirmation">Yes, delete <span class="group name"></span></button>
+        
+        <button class="cancel red recipient decision">I changed my mind, leave <span class="group name"></span> alone</button>
+        <button class="confirm green recipient decision">Continue with deleting <span class="group name"></span></button>
+      </div>
+    </div>
+  </section>
+  
+  <div class="background"></div>
+</section>
+
+<script src="js/lib/prefixfree.min.js"></script>
+<script>var require = { baseUrl : "js" };</script>
+<script data-main="main" src="js/lib/require-jquery-min.js"></script>
 </body>
+
 </html>
