@@ -90,7 +90,7 @@ function($, Dialog, Group, IO, Recipient, Settings) {
     
     init: function() {
       $dialog = $("#dialogs .migrate.dialog");
-      loadOldData(); // TODO: remove this
+      //loadOldData(); // TODO: remove this
       
       $dialog.on("migration.start", function() {
         setTimeout(function() {
