@@ -56,6 +56,9 @@ function($, Dialog, Group, IO, Recipient, Settings) {
     
     for (var i = localStorage.length - 1; i >= 0; i--) {
       var name = localStorage.key(i);
+      if (name === OLD_PREV_YEARS) {
+    	  continue;
+      }
       var entry = IO.readObject(name);
       if (isOldPerson(entry)) {
         var groupIndex = Group.getIndex(entry.group);
@@ -87,7 +90,7 @@ function($, Dialog, Group, IO, Recipient, Settings) {
     
     init: function() {
       $dialog = $("#dialogs .migrate.dialog");
-      //loadOldData(); // TODO: remove this
+      loadOldData(); // TODO: remove this
       
       $dialog.on("migration.start", function() {
         setTimeout(function() {
