@@ -1,7 +1,7 @@
 require(
-["jquery", "dialogs", "group", "handlers", "io", "message", "migration", "recipient", "settings",
+["jquery", "dialogs", "group", "handlers", "io", "message", "migration", "recipient", "settings", "util",
  "lib/jquery-ui-1.8.18.custom.min", "lib/jquery.isotope"], 
-function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings) {
+function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings, Util) {
   $(document).ready(function() {
     IO.init();
     Message.init();
@@ -18,18 +18,9 @@ function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings
       transformsEnabled: false
     });
 
-    Migration.init();
+    //Migration.init();
 
-    $("#main .roster .entry .name .text").draggable({
-      appendTo: "body",
-      containment: "document",
-      cursor: "crosshair",
-      helper: "clone",
-      revert: "invalid",
-      zIndex: 10
-    });
-    
-    
+    $("#main .roster .entry .name .text").draggable(Util.draggableOptions());
     $("#main .group.container").droppable(Group.droppableOptions);
   });
 });

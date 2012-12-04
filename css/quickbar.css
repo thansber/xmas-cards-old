@@ -65,8 +65,8 @@
     width: 20em;
 }
 
-#quickbar section input.new.helpful {
-    color: rgba(188, 188, 188, 1);
+#quickbar section input.new:-moz-placeholder { 
+	color: rgba(188, 188, 188, 1);
 }
 
 #quickbar section select.new {

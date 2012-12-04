@@ -1,6 +1,6 @@
 define( /* Recipient */
-["group", "io", "settings"], 
-function(Group, IO, Settings) {
+["group", "io", "settings", "util"], 
+function(Group, IO, Settings, Util) {
   
   var roster = {};
   var sortedNames = [];
@@ -19,6 +19,7 @@ function(Group, IO, Settings) {
     
     if (appending) {
       $roster.append($entry);
+      enableDraggable($entry);
     } else {
       sortGroupEntries(name, $entry);
     }
@@ -114,6 +115,10 @@ function(Group, IO, Settings) {
     return {total:total, sent:sent, received:received};
   };
   
+  var enableDraggable = function($entry) {
+    $entry.find(".name .text").draggable(Util.draggableOptions());
+  };
+  
   var getEntry = function(name) {
     var $group = Group.find(roster[name].group);
     if ($group.length === 0) {
@@ -179,6 +184,7 @@ function(Group, IO, Settings) {
     var newIndex = namesInGroup.indexOf(name);
     if (newIndex === namesInGroup.length - 1) {
       $roster.append($entry);
+      enableDraggable($entry);
     } else {
       $entry.insertBefore($entries.eq(newIndex));
     }

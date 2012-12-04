@@ -23,21 +23,6 @@ function($, Dialog, Group, Message, Recipient, Settings) {
       // ======================================
       // -------------- QUICKBAR --------------
       // ======================================
-      $quickbar.find("input").on("blur change", function() {
-          var $this = $(this);
-          if ($this.val().length === 0) {
-            $this.addClass("helpful").val($this.attr("title"));
-          } else if ($this.val() === $this.attr("title")) {
-            $this.addClass("helpful");
-          } else {
-            $this.removeClass("helpful");
-          }
-      }).on("focus", function() {
-        var $this = $(this);
-        $this.removeClass("helpful");
-        setTimeout(function() { $this.select() }, 10);
-      });
-      
       $quickbar.find("button.add").click(function(event) {
         var $target = $(event.target);
         
