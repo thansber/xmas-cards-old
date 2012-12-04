@@ -178,7 +178,7 @@ function($, Dialog, Group, Message, Recipient, Settings) {
         }
       });
       
-      $quickbar.find("input").blur();
+      $quickbar.find("input").val("");
     }
   };
 });
