@@ -12,30 +12,20 @@
 }
 
 #quickbar .arrow {
-	border-color: rgba(0, 0, 0, 0);
-	border-style: solid;
-	border-width: 20px;
-	border-bottom-style: none;
-	border-bottom-width: 0;
-	border-top-color: rgba(255, 255, 255, 1);
+    background-image: url("../images/arrow-270.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 	cursor: pointer;
-	height: 0;
-	height: 0;
+	height: 16px;
+	padding: 0.4em;
 	position: absolute;
-	right: 2em;
-	top: 0.4em;
-	transition: top 0.4s;
-	width: 0;
+	right: 2.5em;
+	top: 0;
+	width: 16px;
 }
 
 #quickbar.displayed .arrow {
-	border-bottom-color: rgba(255, 255, 255, 1);
-	border-bottom-style: solid;
-	border-bottom-width: 20px;
-	border-top-color: rgba(0, 0, 0, 0);
-	border-top-style: none;
-	border-top-width: 0;
-	top: 2.9em;
+	background-image: url("../images/arrow-090.png");
 }
 
 #quickbar.displayed section {

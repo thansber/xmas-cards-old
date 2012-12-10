@@ -13,6 +13,7 @@ function($, Dialog, Group, Handlers, IO, Message, Print, Recipient, Settings, Ut
     Print.init();
     
     $("#quickbar").toggleClass("displayed", Settings.isQuickbarDisplayed());
+    Settings.updateQuickbarArrowLabel();
     
     $("#main").isotope({
       itemSelector: ".group.container",

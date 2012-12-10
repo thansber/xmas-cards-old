@@ -64,6 +64,7 @@ function($, Dialog, Group, Message, Print, Recipient, Settings) {
           Message.hide();
         }
         Settings.quickbarDisplayChanged();
+        Settings.updateQuickbarArrowLabel();
       });
       
       $("#messages .close").click(function() {

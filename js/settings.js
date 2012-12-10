@@ -23,13 +23,23 @@ function(IO) {
     },
     
     isQuickbarDisplayed: function() {
-      return !!(+IO.read(QUICKBAR_KEY));
+      var value = IO.read(QUICKBAR_KEY);
+      if (value === undefined) {
+        value = "1";
+        IO.write(QUICKBAR_KEY, value);
+      }
+      return !!(+value);
     },
     
     quickbarDisplayChanged: function() {
       IO.write(QUICKBAR_KEY, +$("#quickbar").hasClass("displayed"));
     },
     
-    setCurrentYear: setCurrentYear
+    setCurrentYear: setCurrentYear,
+    
+    updateQuickbarArrowLabel: function() {
+     var label = !!(+IO.read(QUICKBAR_KEY)) ? "Hide the new recipient/group inputs to save room" : "Display inputs to add new recipients and groups";
+     $("#quickbar .arrow").attr("title", label);
+    }
   };
 });
