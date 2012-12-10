@@ -1,6 +1,0 @@
-#header { display:none; }
-#footer { display:none; }
-
-#roster { border:0; width:100%; }
-#roster th, #roster td { border:0; background-color:white; color:black; }
-#roster th.current { color:black; }

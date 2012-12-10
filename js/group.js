@@ -70,6 +70,7 @@ function($, IO, Util) {
     droppableOptions: droppableOptions,
     find: findGroup,
     findAll: findAllGroups,
+    getAll: function() { return groups },
     getIndex: getIndex,
     
     init: function() {

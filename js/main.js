@@ -1,7 +1,7 @@
 require(
-["jquery", "dialogs", "group", "handlers", "io", "message", "migration", "recipient", "settings", "util",
+["jquery", "dialogs", "group", "handlers", "io", "message", "print", "recipient", "settings", "util",
  "lib/jquery-ui-1.8.18.custom.min", "lib/jquery.isotope"], 
-function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings, Util) {
+function($, Dialog, Group, Handlers, IO, Message, Print, Recipient, Settings, Util) {
   $(document).ready(function() {
     IO.init();
     Message.init();
@@ -10,6 +10,7 @@ function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings
     Dialog.init();
     Group.init();
     Recipient.init();
+    Print.init();
     
     $("#quickbar").toggleClass("displayed", Settings.isQuickbarDisplayed());
     
@@ -17,8 +18,6 @@ function($, Dialog, Group, Handlers, IO, Message, Migration, Recipient, Settings
       itemSelector: ".group.container",
       transformsEnabled: false
     });
-
-    //Migration.init();
 
     $("#main .roster .entry .name .text").draggable(Util.draggableOptions());
     $("#main .group.container").droppable(Group.droppableOptions);

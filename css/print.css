@@ -1,0 +1,70 @@
+.printable {
+	display: block;	
+}
+
+body {
+	color: rgb(60, 60, 60);
+	font-size: 12px;
+	margin: 1em;
+}
+
+#quickbar {
+	display: none;
+}
+
+#summaryCounts {
+	margin: 0;
+}
+
+#summaryCounts .print {
+	display: none;
+}
+
+#main {
+	display: none;
+}
+
+
+#list h4 {
+	font-size: 1.2em;
+	margin-top: 1em;
+	padding: 0.4em 0;
+	width: 40%;
+}
+
+#list table {
+	border-collapse: collapse;
+	border-color: rgb(60, 60, 60);
+	border-style: solid;
+	border-width: 1px 0 0 1px;
+	font-size: 0.8em;
+	margin: 0;
+	width: 90%;
+}
+
+#list table th {
+	border-color: rgb(60, 60, 60);
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+	padding: 0.2em 0.2em 0.3em
+}
+
+#list table td {
+	border-color: rgb(60, 60, 60);
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+	padding: 0.2em 0.2em 0.3em
+}
+
+#list table .name {
+	text-align: left;
+	width: 75%;
+}
+
+#list table .sent {
+	text-align: center;
+}
+
+#list table .recv {
+	text-align: center;
+}

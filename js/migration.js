@@ -1,3 +1,8 @@
+/* 
+This should not be called anywhere anymore, but I am leaving it around
+for reference.
+*/
+
 define( /* Migration */
 ["jquery", "dialogs", "group", "io", "recipient", "settings"], 
 function($, Dialog, Group, IO, Recipient, Settings) {

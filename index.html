@@ -7,10 +7,15 @@
   <link rel="stylesheet" href="css/quickbar.css"/>
   <link rel="stylesheet" href="css/roster.css"/>
   <link rel="stylesheet" href="css/dialogs.css"/>
+  <link rel="stylesheet" media="print" href="css/print.css"/>
+  <!--[if lt IE 9]>
+  <script src="${staticUri}ui/js/lib/html5.js"></script>
+  <script src="${staticUri}ui/js/lib/shims.js"></script>
+  <![endif]-->
 </head>
 
 <body>
-<div id="version">v3.01</div>
+<div id="version">v3.1</div>
 <div id="quickbar">
   <section class="recipient">
     <input type="text" id="newRecipient" class="new recipient" title="Add a new recipient" placeholder="Add a new recipient" value="" /> to
@@ -34,6 +39,7 @@
   <p class="total summary"><span class="count">0</span> <span class="multiple">people are</span><span class="single">person is</span> on your Christmas Card list.</p>
   <p class="sent summary"><span class="count">0</span> <span class="multiple">people have</span><span class="single">person has</span> been sent a Christmas Card in <span class="currentYear"></span>.</p>
   <p class="received summary"><span class="count">0</span> <span class="multiple">people have</span><span class="single">person has</span> sent you a Christmas Card in <span class="currentYear"></span>.</p>
+  <div class="print icon" title="View your roster as a printable list"></div>
 </header>
 
 <section id="main">
@@ -91,6 +97,8 @@
   
   <div class="background"></div>
 </section>
+
+<section id="list" class="printable"><!-- populated by Javascript --></section>
 
 <script src="js/lib/prefixfree.min.js"></script>
 <script>var require = { baseUrl : "js" };</script>

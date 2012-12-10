@@ -127,6 +127,16 @@ function(Group, IO, Settings, Util) {
     return $group.find(".roster li[data-name='" + name + "']");
   };
   
+  var getGroupMembers = function(groupIndex) { 
+    var memberNames = [];
+    for (var name in roster) {
+      if (roster[name].group === groupIndex) {
+        memberNames.push(name);
+      }
+    }
+    return memberNames;
+  };
+  
   var getNumGroupMembers = function($group) {
     return $group.find(".roster .entry").length;
   };
@@ -243,15 +253,15 @@ function(Group, IO, Settings, Util) {
     
     calculateSummaryCounts: calculateSummaryCounts,
     
-    getGroupMembers: function(groupIndex) { 
-      var memberNames = [];
-      for (var name in roster) {
-        if (roster[name].group === groupIndex) {
-          memberNames.push(name);
-        }
-      }
-      return memberNames;
+    getGroupMembers: getGroupMembers,
+    
+    getGroupMembersSorted: function(groupIndex) {
+    	var sortedMembers = getGroupMembers(groupIndex);
+    	sortedMembers.sort(sortByName);
+    	return sortedMembers;
     },
+    
+    getRoster: function() { return roster; },
     
     init: function() {
       roster = IO.readObject(ROSTER_KEY);
@@ -274,6 +284,8 @@ function(Group, IO, Settings, Util) {
       $header.find(".currentYear").text(Settings.getCurrentYear());
       updateCounts();
     },
+    
+    parseYearStatus: parseYearStatus,
     
     rebuildLayout: rebuildLayout,
     

@@ -1,7 +1,7 @@
 define(
 /* Handlers */ 
-["jquery", "dialogs", "group", "message", "recipient", "settings"], 
-function($, Dialog, Group, Message, Recipient, Settings) {
+["jquery", "dialogs", "group", "message", "print", "recipient", "settings"], 
+function($, Dialog, Group, Message, Print, Recipient, Settings) {
 
   var $quickbar = null;
   var $newRecipient = null;
@@ -68,6 +68,10 @@ function($, Dialog, Group, Message, Recipient, Settings) {
       
       $("#messages .close").click(function() {
         Message.hide();
+      });
+      
+      $("#summaryCounts .print").click(function() {
+        Print.show();
       });
       
       // =====================================
