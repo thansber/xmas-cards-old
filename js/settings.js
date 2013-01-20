@@ -15,8 +15,9 @@ function(IO) {
   return {
     getCurrentYear: function() {
       currentYear = IO.read(CURRENT_YEAR_KEY);
-      if (!currentYear) {
-        currentYear = new Date().getFullYear();
+      var todayYear = new Date().getFullYear();
+      if (!currentYear || parseInt(currentYear, 10) !== todayYear) {
+        currentYear = todayYear;
         setCurrentYear(currentYear);
       }
       return "" + currentYear;

@@ -75,7 +75,8 @@ function(Group, IO, Settings, Util) {
     for (var i = currentYear; i > currentYear - 3; i--) {
       var yearData = entry.years[""+ i];
       var status = parseYearStatus(yearData);
-      if (yearData !== null && yearData !== undefined) {
+      // For new years, nothing will exist on roster yet, but we always want to show the current year's "pills"
+      if ((yearData !== null && yearData !== undefined) || i === currentYear) {
         if (!status) {
           status = {};
         }
